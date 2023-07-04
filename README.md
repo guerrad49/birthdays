@@ -1,6 +1,6 @@
 ## Usage
 
-This script allows the user to create and maintain a database of birthdays. The database is kept as a local json file.
+This script allows the user to create and maintain a database of birthdays. The database is kept as a local json file. This repo contains the file **test.json** as an example.
 
 ***
 
