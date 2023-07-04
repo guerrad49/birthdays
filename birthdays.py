@@ -130,11 +130,11 @@ def parse_args():
     filters = p.add_mutually_exclusive_group()
     filters.add_argument('-m', '--month', type=int,
         help='filter birthdays by given month number e.g. 2, 10')
-    filters.add_argument('-l', '--last',
-        help='filter entries who\'s last name begins with given letter')
     filters.add_argument('-f', '--first',
         help='filter entries who\'s first name begins with given letter')
-
+    filters.add_argument('-l', '--last',
+        help='filter entries who\'s last name begins with given letter')
+    
     args = p.parse_args()
 
     if args.month and args.month not in range(1,13):
