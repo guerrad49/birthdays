@@ -7,25 +7,29 @@ The birthday database is maintained in a json file.
 
 1. #### SORT
 
-This flag sorts the database by either one of the options: *age*, *last*, or *calendar*.
-
-  Example:
+  This flag sorts and displays the database by either one of the options: *age*, *last* (i.e. last name), or *calendar*.
 
   > ./birthdays.py test.json -s calendar
 
 2. #### CHANGES
 
-This group of flags allows the user to add/remove an entry from the database. The only difference is that adding an entry requires date-of-birth as well.
+This group allows the user to update the database.
 
-  Examples:
+  a. **APPEND**
+
+  This flag requires three arguments: *first_name*, *last_name*, *date-of-birth*.
 
   > ./birthdays.py test.json -a john smith 2000-01-30
 
+  b. **REMOVE**
+  
+  This flag requires two arguments: *first_name*, *last_name*.
+  
   > ./birthdays.py test.json -r john smith
 
 3. #### FILTERS
 
-This group of flags allows the user to filter and display sections of the database.
+This group allows the user to filter and display sections of the database.
 
   Examples:
   
