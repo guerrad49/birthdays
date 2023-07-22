@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import pdb
-import json
+import pickle
 import string
 import argparse
 from datetime import date, datetime
@@ -14,8 +14,8 @@ class BirthdayBook:
 
     def get_entries(self):
         '''Create a list consisting of Person objects from file'''
-        with open(self.file, 'r') as f:
-            raw = json.load(f)
+        with open(self.file, 'rb') as f:
+            raw = pickle.load(f)
         
         return [Person(p['first'], p['last'], p['dob']) for p in raw]
         
@@ -46,8 +46,8 @@ class BirthdayBook:
     def update(self):
         '''Update local file containing database'''
         list_of_dicts = [p.to_dict() for p in self.entries]
-        with open(self.file, 'w') as f:
-            json.dump(list_of_dicts, f)
+        with open(self.file, 'wb') as f:
+            pickle.dump(list_of_dicts, f)
 
     def sort_book(self, opt):
         '''Sorting options. Return list of Person objects'''
@@ -82,7 +82,7 @@ class BirthdayBook:
         for p in in_list:
             name_str = p.get_full_name()
             dob_str  = p.dob.strftime('%Y-%m-%d')
-            line     = '{:>25}   {}   {}'.format(name_str, dob_str, p.age)
+            line     = '{:>25}   {}   {:2}'.format(name_str, dob_str, p.age)
             print(line)
 
 
@@ -117,7 +117,7 @@ class Person:
 def parse_args():
     p = argparse.ArgumentParser()
 
-    p.add_argument('file', help='local json file holding database')
+    p.add_argument('file', help='local pickle file holding database')
     p.add_argument('-s', '--sort', choices=['age','last','calendar'],
         help='sort birthdays in specified manner')
 

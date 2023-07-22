@@ -1,6 +1,6 @@
 ## Usage
 
-This script allows the user to create and maintain a database of birthdays. The database is kept as a local json file. This repo contains the file **test.json** as an example.
+This script allows the user to create and maintain a database of birthdays. The database is kept as a local binary file. This repo contains the file **test** as an example.
 
 ***
 
@@ -9,7 +9,7 @@ This script allows the user to create and maintain a database of birthdays. The 
 1. #### SORT
 
     This flag sorts and displays the database by either one of the options: *age*, *last* (i.e. last name), or *calendar*.
-    > ./birthdays.py test.json -s calendar
+    > ./birthdays.py test -s calendar
 
 2. #### CHANGES
 
@@ -17,11 +17,11 @@ This script allows the user to create and maintain a database of birthdays. The 
 
 	a. **APPEND**
 	This flag requires three arguments: *first_name*, *last_name*, *date-of-birth*.
-	> ./birthdays.py test.json -a john smith 1998-02-30
+	> ./birthdays.py test -a john smith 1998-02-30
 
 	b. **REMOVE**
 	This flag requires two arguments: *first_name*, *last_name*.
-	> ./birthdays.py test.json -r john smith
+	> ./birthdays.py test -r john smith
 
 3. #### FILTERS
 
@@ -29,12 +29,12 @@ This script allows the user to create and maintain a database of birthdays. The 
 
 	a. **MONTH**
 	This flag requires one argument: *month_number*.
-	> ./birthdays.py test.json -m 2
+	> ./birthdays.py test -m 2
 
 	b. **FIRST**
 	This flag requires one argument: *first_name_letter*.
-	> ./birthdays.py test.json -f d
+	> ./birthdays.py test -f d
 
 	c. **LAST**
 	This flag requires one argument: *last_name_letter*.
-	> ./birthdays.py test.json -l g
+	> ./birthdays.py test -l g
