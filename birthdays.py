@@ -4,112 +4,114 @@ import pdb
 import pickle
 import string
 import argparse
-from datetime import date, datetime
+from datetime import date
 
 
 class BirthdayBook:
-    def __init__(self, file):
-        self.file     = file        
-        self.entries  = self.get_entries()
+    def __init__(self, filename):
+        self.filename = filename
+        self.book = self.get_book_entries()
 
-    def get_entries(self):
-        '''Create a list consisting of Person objects from file'''
-        with open(self.file, 'rb') as f:
-            raw = pickle.load(f)
+    def get_book_entries(self) -> list:
+        '''Create list of Person objects from local file'''
+        with open(self.filename, 'rb') as f:
+            data = pickle.load(f)
         
-        return [Person(p['first'], p['last'], p['dob']) for p in raw]
+        return [
+            Person(p['first_name'], p['last_name'], p['date_of_birth']) 
+            for p in data
+            ]
         
     def add_entry(self, *args):
-        '''Add a new person to database and update file'''
         args = [x.lower() for x in args]
         p    = Person(*args)
-        self.entries.append(p)
-        self.update()
+        self.book.append(p)
+        self.update_database()
 
     def remove_entry(self, *args):
-        '''Remove a person from database and update file'''
-        args     = [x.title() for x in args]
-        fname    = ' '.join(args)
-        init_len = len(self.entries)
+        args = [x.lower() for x in args]
+        deleted_entry = False
         
-        for i, p in enumerate(self.entries):
-            if fname == p.get_full_name():
-                del self.entries[i]
+        for i, p in enumerate(self.book):
+            if (args[0] == p.first_name) and (args[1] == p.last_name):
+                del self.book[i]
+                deleted_entry = True
                 break
 
-        if init_len > len(self.entries):
-            self.update()
-            pass
+        if deleted_entry:
+            self.update_database()
         else:
             print('Entry not found. Database unchanged.')
 
-    def update(self):
-        '''Update local file containing database'''
-        list_of_dicts = [p.to_dict() for p in self.entries]
-        with open(self.file, 'wb') as f:
-            pickle.dump(list_of_dicts, f)
+    def update_database(self) -> list:
+        data = [p.to_dict() for p in self.book]
+        with open(self.filename, 'wb') as f:
+            pickle.dump(data, f)
 
-    def sort_book(self, opt):
-        '''Sorting options. Return list of Person objects'''
-        if opt == 'last':
-            ordered = sorted(self.entries, key=lambda p: p.last)
-        elif opt == 'age':
-            ordered = sorted(self.entries, key=lambda p: (p.dob.year, p.dob.month, p.dob.day) )
-        elif opt == 'calendar':
-            ordered = sorted(self.entries, key=lambda p: (p.dob.month, p.dob.day) )
+    def sort_book(self, sort_by: string):
+        if sort_by == 'last':
+            sorted_book = sorted(self.book, key=lambda p: p.last_name)
+        elif sort_by == 'age':
+            sorted_book = sorted(self.book, 
+                                 key=lambda p: (p.dob.year, p.dob.month, p.dob.day)
+                                 )
+        elif sort_by == 'calendar':
+            sorted_book = sorted(self.book, key=lambda p: (p.dob.month, p.dob.day) )
 
-        return ordered
+        return sorted_book
 
-    def filter_book(self, opt, key):
-        '''Filter birthdays and return list of Person objects'''
-        sorted_list = self.sort_book('calendar')
+    def filter_book(self, filter_by: string, key: 'int or str') -> list:
+        '''Narrow book to entries that pass user-specified filter'''
+        if isinstance(key, str):
+            key = key.lower()
+        
+        sorted_book = self.sort_book('calendar')
 
-        if opt == 'month':
-            filtered = [p for p in sorted_list if p.dob.month == int(key)]
-        elif opt == 'last':
-            filtered = [p for p in sorted_list if p.last.startswith(key)]
-        elif opt == 'first':
-            filtered = [p for p in sorted_list if p.first.startswith(key)]
+        if filter_by == 'month':
+            filtered_book = [p for p in sorted_book if p.dob.month == int(key)]
+        elif filter_by == 'last':
+            filtered_book = [p for p in sorted_book if p.last_name.startswith(key)]
+        elif filter_by == 'first':
+            filtered_book = [p for p in sorted_book if p.first_name.startswith(key)]
 
-        return filtered
+        return filtered_book
 
-    def display_book(self, in_list):
-        '''Print formatted book'''
-        if len(in_list) == 0:
+    def display_book(self, book: list):
+        '''Print details of entries with formatting'''
+        if len(book) == 0:
             print('Empty book.')
             return 0
     
-        for p in in_list:
-            name_str = p.get_full_name()
-            dob_str  = p.dob.strftime('%Y-%m-%d')
-            line     = '{:>25}   {}   {:2}'.format(name_str, dob_str, p.age)
+        for person in book:
+            fullname   = person.get_full_name()
+            dob_in_iso = date.strftime(person.dob, '%Y-%m-%d')
+            line = '{:>25}   {}   {:2}'.format(fullname, dob_in_iso, person.age)
             print(line)
 
 
 class Person:
-    def __init__(self, first, last, dob):
-        self.first = first
-        self.last  = last
-        self.dob   = datetime.fromisoformat(dob)
-        self.age   = self.get_age()
+    def __init__(self, first_name: string, last_name: string, dob: string):
+        self.first_name = first_name
+        self.last_name  = last_name
+        self.dob = date.fromisoformat(dob)
+        self.age = self.get_age()
 
-    def get_age(self):
-        '''Determine and set person's age'''
-        today       = date.today()
+    def get_age(self) -> int:
+        today = date.today()
         one_or_zero = ((today.month, today.day) < (self.dob.month, self.dob.day))
         year_diff   = today.year - self.dob.year
         return year_diff - one_or_zero
 
-    def get_full_name(self):
-        '''Get and return person's full name'''
-        full_name = '{} {}'.format(self.first, self.last)
-        return full_name.title()
-
-    def to_dict(self):
-        d = {'first': self.first,
-             'last' : self.last,
-             'dob'  : self.dob.strftime('%Y-%m-%d'),
-             'age'  : self.age}
+    def get_full_name(self) -> string:
+        return '{} {}'.format(self.first_name, self.last_name)
+    
+    def to_dict(self) -> dict:
+        d = {
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'date_of_birth': date.strftime(self.dob, '%Y-%m-%d'),
+            'age': self.age
+        }
         return d
 
 #=======================================================================
@@ -152,25 +154,25 @@ def parse_args():
 if __name__ == '__main__':
 
     args = parse_args()
-    book = BirthdayBook(args.file)
+    bb   = BirthdayBook(args.file)
 
     if args.sort:
-        sorted_entries = book.sort_book(args.sort)
-        book.display_book(sorted_entries)
+        sorted_book = bb.sort_book(args.sort)
+        bb.display_book(sorted_book)
 
     if args.append:
-        book.add_entry(*args.append)
+        bb.add_entry(*args.append)
     elif args.remove:
         response = input('Are you sure you want to remove someone? (y/n)\t')
         if response == 'y':
-            book.remove_entry(*args.remove)
+            bb.remove_entry(*args.remove)
             
     if args.month:
-        filtered_list = book.filter_book('month', args.month)
-        book.display_book(filtered_list)
+        filtered_book = bb.filter_book('month', args.month)
+        bb.display_book(filtered_book)
     elif args.last:
-        filtered_list = book.filter_book('last', args.last.lower())
-        book.display_book(filtered_list)
+        filtered_book = bb.filter_book('last', args.last)
+        bb.display_book(filtered_book)
     elif args.first:
-        filtered_list = book.filter_book('first', args.first.lower())
-        book.display_book(filtered_list)
+        filtered_book = bb.filter_book('first', args.first)
+        bb.display_book(filtered_book)
