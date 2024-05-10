@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-import pdb
 import string
 import argparse
 
-from classes import BirthdayBook
+from birthdays import BirthdayBook
 
 
 #=======================================================================
