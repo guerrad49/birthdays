@@ -2,12 +2,27 @@ import pickle
 from datetime import date
 
 
-class Person:
-    def __init__(self, firstName: str, lastName: str, dob: str) -> None:
-        self.firstName = firstName
-        self.lastName  = lastName
-        self.dob = date.fromisoformat(dob)
-        self.age = self.get_age()
+class Person(object):
+    def __init__(self, first: str, last: str, dob: str) -> None:
+        self.first = first
+        self.last  = last
+        self.dob   = date.fromisoformat(dob)
+        self.age   = self.get_age()
+
+
+    def __repr__(self) -> str:
+        return "Person('{}', '{}', '{}')".format(
+            self.first, self.last, date.isoformat(self.dob)
+        )
+
+
+    def __iter__(self):
+        for key in self.__dict__:
+            value = getattr(self, key)
+            if key != 'dob':
+                yield key, value
+            else:
+                yield key, date.isoformat(value)
 
 
     def get_age(self) -> int:
@@ -17,24 +32,15 @@ class Person:
         return yearDiff - oneOrZero
 
 
-    def get_full_name(self) -> str:
-        return '{} {}'.format(self.firstName, self.lastName)
-
-
-    def to_dict(self) -> dict:
-        d = {
-            'first_name': self.firstName,
-            'last_name' : self.lastName,
-            'date_of_birth': date.strftime(self.dob, '%Y-%m-%d'),
-            'age': self.age
-        }
-        return d
+    def fullname(self) -> str:
+        return '{} {}'.format(self.first, self.last)
 
 
 class BirthdayBook:
     def __init__(self, filename: str) -> None:
         self.filename = filename
         self.book = self.get_book_entries()
+
 
     def get_book_entries(self) -> list:
         """Create list of Person objects from local file"""
@@ -70,15 +76,15 @@ class BirthdayBook:
             print('Entry not found. Database unchanged.')
 
 
-    def update_database(self) -> list:
-        data = [p.to_dict() for p in self.book]
+    def update_database(self):
+        data = [dict(p) for p in self.book]
         with open(self.filename, 'wb') as f:
             pickle.dump(data, f)
 
 
     def sort_book(self, how: str):
         if how == 'last':
-            sortedBook = sorted(self.book, key=lambda p: p.lastName)
+            sortedBook = sorted(self.book, key=lambda p: p.last)
         elif how == 'age':
             sortedBook = sorted(
                 self.book, 
@@ -107,11 +113,11 @@ class BirthdayBook:
                 ]
         elif how == 'last':
             filteredBook = [
-                p for p in sortedBook if p.lastName.startswith(key)
+                p for p in sortedBook if p.last.startswith(key)
                 ]
         elif how == 'first':
             filteredBook = [
-                p for p in sortedBook if p.lastName.startswith(key)
+                p for p in sortedBook if p.last.startswith(key)
                 ]
 
         return filteredBook
@@ -123,7 +129,7 @@ class BirthdayBook:
             return 0
     
         for person in book:
-            fullname = person.get_full_name()
+            fullname = person.fullname()
             isoDob   = date.strftime(person.dob, '%Y-%m-%d')
             line     = '{:>25}   {}   {:2}'.format(
                 fullname, isoDob, person.age
