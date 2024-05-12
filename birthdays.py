@@ -1,136 +1,276 @@
 import pickle
 from datetime import date
+from typing import Optional
+
+
+class FutureDateError(Exception):
+    def __str__(self) -> str:
+        msg = 'date-of-birth cannot be in the future'
+        return msg
 
 
 class Person(object):
+    """An instance of this class represents a person with attributes."""
+    
     def __init__(self, first: str, last: str, dob: str) -> None:
-        self.first = first
-        self.last  = last
-        self.dob   = date.fromisoformat(dob)
-        self.age   = self.get_age()
+        """
+        Parameters
+        ----------
+        first:
+            The Person's first name
+        last:
+            The Person's last name (spaces converted to underscores)
+        dob:
+            The Person's date-of-birth
+        
+        Examples
+        --------
+        >>> p = Person('maynard', 'keenan', '1964-04-17')
 
+        See Also
+        --------
+        Person.set_dob
+        Person.set_age
+        """
+
+        self.first = first.lower()
+        self.last  = last.replace(' ', '_').lower()
+        self.set_dob(dob)
+        self.set_age()
 
     def __repr__(self) -> str:
+        """Overwrite to be more informative."""
+
         return "Person('{}', '{}', '{}')".format(
             self.first, self.last, date.isoformat(self.dob)
         )
 
+    def __eq__(self, other):
+        """Overwrite to determine equality of different objects."""
 
-    def __iter__(self):
-        for key in self.__dict__:
-            value = getattr(self, key)
-            if key != 'dob':
-                yield key, value
-            else:
-                yield key, date.isoformat(value)
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        else:
+            return False
+    
+    def set_dob(self, dob: str) -> None:
+        """
+        Set the Person's date-of-birth as a datetime.date object.
+        Method is called at object instantiation.
 
+        Parameters
+        ----------
+        dob:
+            The date-of-birth in iso format
 
-    def get_age(self) -> int:
-        today = date.today()
-        oneOrZero = ((today.month, today.day) < (self.dob.month, self.dob.day))
-        yearDiff  = today.year - self.dob.year
-        return yearDiff - oneOrZero
+        Exceptions
+        ----------
+        Raises error if dob is in the future
+        """
 
+        dateObj = date.fromisoformat(dob)
+        if dateObj > date.today():
+            raise FutureDateError
+        self.dob = dateObj
+
+    def set_age(self) -> None:
+        """
+        Compute and set a Person's age from Person.dob attribute.
+        Method is called at object instantiation.
+        """
+        
+        tday = date.today()
+        oneOrZero = ((tday.month, tday.day) < (self.dob.month, self.dob.day))
+        yearDiff  = tday.year - self.dob.year
+        self.age  = yearDiff - oneOrZero
 
     def fullname(self) -> str:
         return '{} {}'.format(self.first, self.last)
 
 
-class BirthdayBook:
-    def __init__(self, filename: str) -> None:
-        self.filename = filename
-        self.book = self.get_book_entries()
+class BirthdayBook(list):
+    """
+    An instance of this class is a type of list holding Person objects.
 
+    Examples
+    --------
+    >>> bb = BirthdayBook()
 
-    def get_book_entries(self) -> list:
-        """Create list of Person objects from local file"""
-        with open(self.filename, 'rb') as f:
+    See Also
+    --------
+    class list
+    """
+    
+    def load_from_file(self, file: str) -> None:
+        """
+        Create list of Person objects from pickle file.
+        
+        Parameters
+        ----------
+        file:
+            The file[path] containing the data
+        """
+        
+        with open(file, 'rb') as f:
             data = pickle.load(f)
         
-        return [
-            Person(p['first_name'], p['last_name'], p['date_of_birth']) 
-            for p in data
-            ]
-    
+        for p in data:
+            super().append(p)
 
-    def add_entry(self, *args) -> None:
-        args = [x.lower() for x in args]
-        p    = Person(*args)
-        self.book.append(p)
-        self.update_database()
+    def remove(self, first: str, last: str) -> None:
+        """
+        Overwrite to remove item using Person's names.
 
-
-    def remove_entry(self, *args) -> None:
-        args = [x.lower() for x in args]
-        deleted_entry = False
+        Parameters
+        ----------
+        first:
+            The Person's first name
+        last:
+            The Person's last name
+                
+        Exceptions
+        ----------
+        Raises error if Person is not in BirthdayBook
+        """
         
-        for i, p in enumerate(self.book):
-            if (args[0] == p.first_name) and (args[1] == p.last_name):
-                del self.book[i]
-                deleted_entry = True
+        first = first.lower()
+        last  = last.replace(' ', '_').lower()
+        
+        entryFound = False
+        for i, p in enumerate(self):
+            if (first == p.first) and (last == p.last):
+                del self[i]
+                entryFound = True
                 break
 
-        if deleted_entry:
-            self.update_database()
-        else:
-            print('Entry not found. Database unchanged.')
+        if not entryFound:
+            msg = 'BirthdayBook.remove: value not found'
+            raise ValueError(msg)
 
+    def update(self, file: str):
+        """
+        Update the local database.
 
-    def update_database(self):
-        data = [dict(p) for p in self.book]
-        with open(self.filename, 'wb') as f:
-            pickle.dump(data, f)
+        Parameters
+        ----------
+        file:
+            The file[path] to write as pickle file
+        """
 
+        with open(file, 'wb') as f:
+            pickle.dump(self, f)
 
-    def sort_book(self, how: str):
-        if how == 'last':
-            sortedBook = sorted(self.book, key=lambda p: p.last)
-        elif how == 'age':
-            sortedBook = sorted(
-                self.book, 
-                key=lambda p: (p.dob.year, p.dob.month, p.dob.day)
-                )
-        elif how == 'calendar':
-            sortedBook = sorted(
-                self.book, 
-                key=lambda p: (p.dob.month, p.dob.day) 
-                )
+    def sort(
+            self, 
+            how:     Optional[str]  = 'calendar', 
+            reverse: Optional[bool] = False
+            ) -> None:
+        """
+        Overwrite to allow custom in-place sorting options.
 
-        return sortedBook
-
-
-    def filter_book(self, how: str, key: int | str) -> list:
-        """Narrow book to entries that pass user-specified filter"""
-
-        if isinstance(key, str):
-            key = key.lower()
+        Parameters
+        ----------
+        how:
+            The method for sorting: <calendar>, <last> or <age>
+        reverse:
+            The option for sorting in reverse
         
-        sortedBook = self.sort_book('calendar')
+        Examples
+        --------
+        >>> bb.sort()   # sorts by calendar
+        >>> bb.sort(how='age', reverse=True)   # sorts by age
+        
+        Exceptions
+        ----------
+        Raises error if invalid option is passed
+        """
+
+        how = how.lower()
+
+        if how == 'calendar':
+            super().sort(
+                key=lambda p: (p.dob.month, p.dob.day), 
+                reverse=reverse
+                )
+        elif how == 'last':
+            super().sort(key=lambda p: p.last, reverse=reverse)
+        elif how == 'age':
+            super().sort(
+                key=lambda p: (p.dob.year, p.dob.month, p.dob.day), 
+                reverse=reverse
+                )            
+        else:
+            msg = 'BirthdayBook.sort: invalid parameter <how> value'
+            raise ValueError(msg)
+
+
+    def filter(self, how: str, value: int | str) -> list:
+        """
+        Filter book based on custom options.
+
+        Parameters
+        ----------
+        how:
+            The method for filtering: 
+                <month>, <last_letter> or <first_letter>
+        value:
+            The value to use when filtering
+        
+        Returns
+        -------
+        filteredBook:
+            The narrowed book after filters have been applied
+        
+        Examples
+        --------
+        >>> # filter Persons with birthdays in May
+        >>> filtA = bb.filter(how='month', value=5)
+        >>> # filter Persons with last name letter 'b'
+        >>> filtB = bb.filter(how='last', value='b')
+        """
+        
+        self.sort('calendar')
 
         if how == 'month':
             filteredBook = [
-                p for p in sortedBook if p.dob.month == int(key)
+                p for p in self if p.dob.month == int(value)
                 ]
         elif how == 'last':
             filteredBook = [
-                p for p in sortedBook if p.last.startswith(key)
+                p for p in self if p.last.startswith(value.lower())
                 ]
         elif how == 'first':
             filteredBook = [
-                p for p in sortedBook if p.last.startswith(key)
+                p for p in self if p.first.startswith(value.lower())
                 ]
+        else:
+            msg = 'BirthdayBook.filter: invalid parameter <how> value'
+            raise ValueError(msg)
 
         return filteredBook
 
-    def display_book(self, book: list):
-        """Print details of entries with formatting"""
-        if len(book) == 0:
+    def display(self, book: Optional[list] = None) -> None:
+        """
+        Pretty print of book entries.
+
+        Parameters
+        ----------
+        book:
+            The book list to display
+        """
+
+        if book:
+            bookToDisplay = book
+        else:
+            bookToDisplay = self
+        
+        if len(bookToDisplay) == 0:
             print('Empty book.')
-            return 0
+            return None
     
-        for person in book:
+        for person in bookToDisplay:
             fullname = person.fullname()
-            isoDob   = date.strftime(person.dob, '%Y-%m-%d')
+            isoDob   = date.isoformat(person.dob)
             line     = '{:>25}   {}   {:2}'.format(
                 fullname, isoDob, person.age
                 )
