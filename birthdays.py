@@ -1,3 +1,20 @@
+"""
+birthdays
+---------
+
+This module provides two main classes for the user to build, and manage,
+a database of people and their birthdays:
+    1. Person
+    2. BirthdayBook
+The BirthdayBook class is a type of list intended to hold objects of 
+Person type.
+
+See Also
+--------
+pickle module
+"""
+
+
 import pickle
 from datetime import date
 from typing import Optional
@@ -212,7 +229,9 @@ class BirthdayBook(list):
         ----------
         how:
             The method for filtering: 
-                <month>, <last_letter> or <first_letter>
+                <month>
+                <last>  = short for last-name-starts-with
+                <first> = short for first-name-starts-with
         value:
             The value to use when filtering
         
