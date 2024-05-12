@@ -38,7 +38,7 @@ class Person(object):
         last:
             The Person's last name (spaces converted to underscores)
         dob:
-            The Person's date-of-birth
+            The Person's date-of-birth (yyy-mm-dd)
         
         Examples
         --------
