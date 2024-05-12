@@ -132,7 +132,29 @@ class BirthdayBook(list):
             data = pickle.load(f)
         
         for p in data:
-            super().append(p)
+            self.append(p)
+
+    def append(self, x: Person) -> None:
+        """
+        Overwrite to handle uniqueness by Person names.
+
+        Parameters
+        ----------
+        x:
+            The Person too append to BirthdayBook
+        """
+
+        if not isinstance(x, Person):
+            msg = 'BirthdayBook.append: argument is not Person type'
+            raise TypeError(msg)
+        
+        for p in self:
+            if (x.first == p.first) and (x.last == p.last):
+                msg = '{} is already in BirthdayBook'.format(x)
+                print(msg)
+                return None
+            
+        super().append(x)
 
     def remove(self, first: str, last: str) -> None:
         """
