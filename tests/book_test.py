@@ -8,6 +8,16 @@ class BookTests(unittest.TestCase):
         self.bb = BirthdayBook()
         self.bb.load_from_file('tests/sample_data')
     
+    def test_append_invalid_type(self):
+        self.assertRaises(TypeError, self.bb.append, 3)
+
+    def test_append_repeat(self):
+        p = Person('john', 'doe', '2000-01-01')
+        self.bb.append(p)
+        origLen = len(self.bb)
+        self.bb.append(p)
+        self.assertEqual(origLen, len(self.bb))
+
     def test_remove(self):
         self.bb.remove('danny', 'carey')
         self.assertRaises(
