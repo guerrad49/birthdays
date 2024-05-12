@@ -3,7 +3,7 @@
 import string
 import argparse
 
-from birthdays import BirthdayBook
+from birthdays import Person, BirthdayBook
 
 
 #=======================================================================
@@ -46,25 +46,27 @@ def parse_args():
 if __name__ == '__main__':
 
     args = parse_args()
-    bb   = BirthdayBook(args.file)
+    bb   = BirthdayBook()
+    bb.load_from_file(args.file)
 
     if args.sort:
-        sortedBook = bb.sort_book(args.sort)
-        bb.display_book(sortedBook)
+        bb.sort(args.sort)
+        bb.display()
 
     if args.append:
-        bb.add_entry(*args.append)
+        p = Person(*args.append)
+        bb.append(p)
+        bb.update(args.file)
     elif args.remove:
-        response = input('Are you sure you want to remove someone? (y/n)\t')
-        if response == 'y':
-            bb.remove_entry(*args.remove)
-            
+        bb.remove(*args.remove)
+        bb.update(args.file)
+    
     if args.month:
-        filteredBook = bb.filter_book('month', args.month)
-        bb.display_book(filteredBook)
+        filteredBook = bb.filter('month', args.month)
+        bb.display(filteredBook)
     elif args.last:
-        filteredBook = bb.filter_book('last', args.last)
-        bb.display_book(filteredBook)
+        filteredBook = bb.filter('last', args.last)
+        bb.display(filteredBook)
     elif args.first:
-        filteredBook = bb.filter_book('first', args.first)
-        bb.display_book(filteredBook)
+        filteredBook = bb.filter('first', args.first)
+        bb.display(filteredBook)
