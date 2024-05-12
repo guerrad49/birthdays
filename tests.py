@@ -39,7 +39,7 @@ class PersonTests(unittest.TestCase):
 class BookTests(unittest.TestCase):
     def setUp(self):
         self.bb = BirthdayBook()
-        self.bb.load_from_file('test')
+        self.bb.load_from_file('sample_data')
     
     def test_book_remove(self):
         self.bb.remove('danny', 'carey')
