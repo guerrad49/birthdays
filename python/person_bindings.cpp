@@ -8,7 +8,7 @@ namespace py = pybind11;
 
 namespace Birthdays {
 
-PYBIND11_MODULE(Birthdays, m) {
+PYBIND11_MODULE(example, m) {
     py::class_<Person>(m, "Person")
         .def(py::init<>())
         .def(py::init<const std::string &, const std::string &>())

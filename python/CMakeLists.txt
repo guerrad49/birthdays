@@ -1,8 +1,7 @@
-# set(PYBIND11_FINDPYTHON ON)
 set(Python3_EXECUTABLE
     /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
     )
-find_package(Python
+find_package(Python3
     3.10
     COMPONENTS
     Interpreter Development
@@ -10,13 +9,19 @@ find_package(Python
     )
 find_package(pybind11 CONFIG REQUIRED)
 
-link_libraries(${LIB})
+link_libraries(${PROJECT_NAME})
 
-pybind11_add_module(Person MODULE person_bindings.cpp)
+pybind11_add_module(person SHARED person_bindings.cpp)
 
-target_include_directories(Person PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-)
+# target_link_libraries(person
+#     PUBLIC
+#     ${PYTHON_LIBRARIES}
+#     pybind11::module
+#     )
 
-# target_link_libraries(Person PUBLIC pybind11::module)
+# set_target_properties(${PROJECT_NAME}
+#     PROPERTIES
+#     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+#     PREFIX ""
+#     SUFFIX ".$(python3 -c 'import sys; print(sys.implementation.suffix)')"
+#     )
