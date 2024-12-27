@@ -18,7 +18,10 @@ target_link_libraries(
     )
 
 target_include_directories(test_person PUBLIC
-    "${PROJECT_SOURCE_DIR}/lib"
+	$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+	# "${PROJECT_BINARY_DIR}"
+    # "${PROJECT_SOURCE_DIR}/include"
     )
 
 include(GoogleTest)

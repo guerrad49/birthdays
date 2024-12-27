@@ -5,27 +5,32 @@ project(
     LANGUAGES CXX
     )
 
+# Enable C++17 or higher.
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_subdirectory(lib)
+# Create library.
+add_subdirectory(src)
 
-# Create the target.
-add_executable(${PROJECT_NAME} check.cpp)
+# Add testing.
+if (BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
 
-# Link the library to executable.
-target_link_libraries(${PROJECT_NAME} PUBLIC Birthdays)
+# Add examples.
+option(BUILD_EXAMPLES "Build the examples." OFF)
+if (BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
 
-# Specify library header locations.
-target_include_directories(${PROJECT_NAME} PUBLIC
-    "${PROJECT_BINARY_DIR}"
-    "${PROJECT_SOURCE_DIR}/lib"
-    )
+
+# # Link the library to executable.
+# target_link_libraries(${PROJECT_NAME} PUBLIC Birthdays)
+
+# # Specify library header locations.
+# target_include_directories(${PROJECT_NAME} PUBLIC
+#     "${PROJECT_BINARY_DIR}"
+#     "${PROJECT_SOURCE_DIR}/lib"
+#     )
 
 # set_target_properties(main PROPERTIES LINKER_LANGUAGE CXX)
-
-option(RUN_GTESTS "Build testing scripts." OFF)
-
-if (RUN_GTESTS)
-    add_subdirectory(tests/cpp)
-endif()

@@ -30,7 +30,7 @@ public:
         const std::string& last, 
         const std::vector<uint16_t>& dob = std::vector<uint16_t> {0,0,0}
         );
-
+    
     /// Destructor.
     ~Person() = default;
 
