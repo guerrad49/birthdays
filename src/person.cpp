@@ -1,5 +1,4 @@
 #include <regex>
-#include <sstream>
 
 #include "person.h"
 
@@ -18,7 +17,7 @@ Person::Person(
     this->setDoB(dob);
 }
 
-std::string Person::dobStr() {
+std::string Person::dobStr() const {
     std::stringstream ss;
     ss << dob_[0] << '-' 
         << std::setw(2) << std::setfill('0') << dob_[1]
@@ -52,16 +51,39 @@ void Person::setDoB(const std::vector<uint16_t>& v) {
 
 void Person::setAge(const std::vector<uint16_t>& tdy) {    
     uint16_t yearDiff = tdy[0] - dob_[0];
-    uint8_t oneOrZero = 0;
+    uint16_t oneOrZero = 0;
     if ( (tdy[1] < dob_[1]) && (tdy[2] < dob_[2]) )
         oneOrZero = 1;
     age_ = yearDiff - oneOrZero;
+}
+
+std::ostream& operator<<(std::ostream& os, const Person& p) {
+    os << "Person(" << p.firstName() 
+        << ", " << p.lastName() << ", " 
+        << p.dobStr() << ")";
+    return os;
 }
 
 bool operator==(const Person& lhs, const Person& rhs) {
     return (lhs.firstName_ == rhs.firstName_) && 
         (lhs.lastName_ == rhs.lastName_) &&
         (lhs.dob_ == rhs.dob_);
+}
+
+bool operator<(const Person &lhs, const Person &rhs) {
+    return lhs.dob_ < rhs.dob_;
+}
+
+bool operator>(const Person &lhs, const Person &rhs) {
+    return rhs < lhs;
+}
+
+bool operator<=(const Person &lhs, const Person &rhs) {
+    return !(lhs > rhs);
+}
+
+bool operator>=(const Person &lhs, const Person &rhs) {
+    return !(lhs < rhs);
 }
 
 }  // End namespace Birthdays.
