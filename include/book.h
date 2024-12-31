@@ -1,13 +1,15 @@
 #ifndef BOOK_H
 #define BOOK_H
 
+#include <initializer_list>
+
 #include "person.h"
 
 namespace Birthdays {
 
 class Book {    
 public:
-    std::vector<size_t> indices;
+    std::vector<size_t> ids;
 
     enum SORTING_METHOD
     {
@@ -26,46 +28,46 @@ public:
     /// Default constructor.
     Book() = default;
 
+    /// @brief Initializer list constructor.
+    Book(std::initializer_list<Person> list);
+
     /**
-     * \brief Appends Person to book_ list.
-     * \details Performs a dedupe check first.
-     * \param p The Person to append.
+     * @brief Appends Person to book_ list.
+     * @details Performs a dedupe check first.
+     * @param p The Person to append.
      */
     void append(const Person& p);
 
     /**
-     * \brief Removes Person given names.
-     * \details Remove is performed when both names match.
-     * \param first The first name.
-     * \param last The last name.
+     * @brief Removes Person given names.
+     * @details Remove is performed when full names match.
+     * @param p The Person to remove.
      */
-    void remove(const std::string& first, const std::string& last);
+    void remove(const Person& p);
 
-    void calc_ages(const std::vector<uint16_t>& tdy);
+    void update_ages(const std::vector<uint16_t>& tdy);
 
-    /// Prints book_ elements using indices as order.
+    /// Prints book_ elements using ids as order.
     void display();
 
-    /// Create an index for every element of book_.
-    void reset_indices();
+    /// Create an id for every Person in book_.
+    void reset_ids();
 
     auto begin() { return book_.begin(); }
     auto end() { return book_.end(); }
-    // auto cbegin() const { return book_.cbegin(); }
-    // auto cend() const { return book_.cend(); }
 
     /**
-     * \brief Sort book_ indices.
-     * \details Sorting options are given in SORTING_METHOD enum.
-     * \param method The method for sorting.
+     * @brief Sort book_ ids.
+     * @details Sorting options are given in SORTING_METHOD enum.
+     * @param method The method for sorting.
      */
     void sort(int method = SORT_CALENDAR);
 
     /**
-     * \brief Filter book_ indices.
-     * \details Filter options are given in FILTER_METHOD enum.
-     * \param method The method for filtering.
-     * \param value The value to filter by.
+     * @brief Filter book_ ids.
+     * @details Filter options are given in FILTER_METHOD enum.
+     * @param method The method for filtering.
+     * @param value The value to filter by.
      */
     void filter(int method, char value);
 
