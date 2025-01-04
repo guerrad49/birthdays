@@ -7,7 +7,7 @@
 
 namespace Birthdays {
 
-class Book {    
+class Book {
 public:
     std::vector<size_t> ids;
 
