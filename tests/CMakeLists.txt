@@ -25,5 +25,19 @@ target_include_directories(test_person PUBLIC
     "${PROJECT_SOURCE_DIR}/include"
 )
 
+add_executable(test_book test_book.cpp)
+
+target_link_libraries(
+    test_book
+    GTest::gtest_main
+    ${LIB}
+)
+
+target_include_directories(test_book PUBLIC
+	"${PROJECT_BINARY_DIR}"
+    "${PROJECT_SOURCE_DIR}/include"
+)
+
 include(GoogleTest)
 gtest_discover_tests(test_person)
+gtest_discover_tests(test_book)
