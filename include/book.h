@@ -53,6 +53,9 @@ public:
     /// Create an id for every Person in book_.
     void reset_ids();
 
+    size_t size() { return book_.size(); }
+    Person operator[](int index) const;
+
     auto begin() { return book_.begin(); }
     auto end() { return book_.end(); }
 
@@ -60,8 +63,9 @@ public:
      * @brief Sort book_ ids.
      * @details Sorting options are given in SORTING_METHOD enum.
      * @param method The method for sorting.
+     * @param reverse The truth value for sorting in reverse.
      */
-    void sort(int method = SORT_CALENDAR);
+    void sort(int method = SORT_CALENDAR, bool reverse = false);
 
     /**
      * @brief Filter book_ ids.

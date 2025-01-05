@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 #include "book.h"
 
@@ -83,17 +84,25 @@ void Book::reset_ids() {
         ids.push_back(i);
 }
 
-void Book::sort(int method) {
+Person Book::operator[](int index) const {
+    if (index >= 0 && index < book_.size()) {
+        return book_[index];
+    } else {
+        throw std::out_of_range("Index out of range");
+    }
+}
+
+void Book::sort(int method, bool reverse) {
     auto compare = [this, method] (int i, int j) -> bool {
         const Person &p = book_[i];
         const Person &q = book_[j];
 
         switch(method) {
             case SORT_LASTNAME:
-                return p.lastName_ > q.lastName_;
+                return p.lastName_ < q.lastName_;
                 break;
             case SORT_AGE:
-                return p.age_ > q.age_;
+                return p.age_ < q.age_;
                 break;
             default:  // SORT_CALENDAR
                 // If month is same, compare day.
@@ -106,6 +115,9 @@ void Book::sort(int method) {
     };
 
     std::sort(ids.begin(), ids.end(), compare);
+    
+    if (reverse)
+        std::reverse(ids.begin(), ids.end());
 }
 
 void Book::filter(int method, char value) {
