@@ -10,8 +10,8 @@ namespace python {
 
 PYBIND11_MODULE(Person, m) {
     py::class_<Person>(m, "Person")
-        // Constructors.
         .def(py::init<>())
+        
         .def(py::init<
             const std::string &, 
             const std::string &, 
@@ -30,13 +30,46 @@ PYBIND11_MODULE(Person, m) {
             }
         )
 
-        .def_property("firstName", &Person::firstName, &Person::setFirstName)
-        .def_property("lastName", &Person::lastName, &Person::setLastName)
-        .def_property("fullName", &Person::fullName, &Person::setFullName)
-        .def_property("dob", &Person::dob, &Person::setDoB)
-        .def_property("age", &Person::age, &Person::setAge)
+        .def_property(
+            "firstName", 
+            &Person::firstName, 
+            &Person::setFirstName,
+            "The Person's (formatted) first name."
+        )
 
-        .def("calcAge", &Person::calcAge);
+        .def_property(
+            "lastName", 
+            &Person::lastName, 
+            &Person::setLastName, 
+            "The Person's (formatted) last name."
+        )
+        
+        .def_property(
+            "fullName", 
+            &Person::fullName, 
+            &Person::setFullName, 
+            "The Person's full name. Joins first and last names."
+        )
+        
+        .def_property(
+            "dob", 
+            &Person::dob, 
+            &Person::setDoB, 
+            "The Person's date-of-birth list i.e. [year,month,day]."
+        )
+
+        .def_property(
+            "age", 
+            &Person::age, 
+            &Person::setAge, 
+            "The Person's age."
+        )
+
+        .def(
+            "calcAge", 
+            &Person::calcAge, 
+            "Calculate Person's age."
+        );
     }
 
 } // End namespace python.

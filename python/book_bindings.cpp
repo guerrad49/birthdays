@@ -10,8 +10,8 @@ namespace python {
 
 PYBIND11_MODULE(Book, m) {
     py::class_<Book>(m, "Book")
-        // Constructors.
         .def(py::init<>())
+
         .def(py::init([](py::list values) {
             Book b;
             for (auto v: values)
@@ -31,20 +31,55 @@ PYBIND11_MODULE(Book, m) {
             }
         )
 
-        .def_readwrite("ids", &Book::ids)
-
-        .def("append", &Book::append)
-        .def("remove", &Book::remove)
-        
-        .def("update_ages", &Book::update_ages)
-        .def("display", &Book::display)
-        .def("reset_ids", &Book::reset_ids)
-
-        .def("sort", &Book::sort,
-            py::arg("method") = 1,
-            py::arg("reverse") = false
+        .def_readwrite(
+            "ids", 
+            &Book::ids,
+            "The id list corresponding to Book members."
         )
-        .def("filter", &Book::filter);
+
+        .def(
+            "append", 
+            &Book::append, 
+            "Appends a member to Book."
+        )
+        
+        .def(
+            "remove", 
+            &Book::remove, 
+            "Removes a member from Book."
+        )
+        
+        .def(
+            "update_ages", 
+            &Book::update_ages, 
+            "Updates ages of all members in Book."
+        )
+
+        .def(
+            "display", 
+            &Book::display,
+            "Formatted print of Book using ids."
+        )
+        
+        .def(
+            "reset_ids", 
+            &Book::reset_ids, 
+            "Reset Book ids to initial state i.e. [0,1,2..]."
+        )
+
+        .def(
+            "sort", 
+            &Book::sort,
+            py::arg("method") = 1, 
+            py::arg("reverse") = false, 
+            "Sort Book ids by method."
+        )
+
+        .def(
+            "filter", 
+            &Book::filter, 
+            "Filter Book ids by method."
+        );
 
     // TODO: Handle enums.
     }
