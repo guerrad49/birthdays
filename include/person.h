@@ -53,12 +53,13 @@ public:
     void setLastName(const std::string& str);
     void setFullName();
     void setDoB(const std::vector<uint16_t>& v);
+    void setAge(const uint8_t& age) { age_ = age; }
 
     /**
      * @brief Compute and set age using today's date.
      * @param tdy Today's date vector.
      */
-    void setAge(const std::vector<uint16_t>& tdy);
+    void calcAge(const std::vector<uint16_t>& tdy);
 
 protected:
     /// Person string representation.

@@ -19,7 +19,8 @@ Person::Person(
 
 std::string Person::dobStr() const {
     std::stringstream ss;
-    ss << dob_[0] << '-' 
+    ss << std::setw(4) << std::setfill('0') << dob_[0] 
+        << '-' 
         << std::setw(2) << std::setfill('0') << dob_[1]
         << '-'
         << std::setw(2) << std::setfill('0') << dob_[2];
@@ -49,7 +50,7 @@ void Person::setDoB(const std::vector<uint16_t>& v) {
     dob_ = v;
 }
 
-void Person::setAge(const std::vector<uint16_t>& tdy) {    
+void Person::calcAge(const std::vector<uint16_t>& tdy) {
     uint16_t yearDiff = tdy[0] - dob_[0];
     uint16_t oneOrZero = 0;
     if ( (tdy[1] < dob_[1]) && (tdy[2] < dob_[2]) )
@@ -59,8 +60,8 @@ void Person::setAge(const std::vector<uint16_t>& tdy) {
 
 std::ostream& operator<<(std::ostream& os, const Person& p) {
     os << "Person(" << p.firstName() 
-        << ", " << p.lastName() << ", " 
-        << p.dobStr() << ")";
+        << "," << p.lastName() 
+        << "," << p.dobStr() << ")";
     return os;
 }
 
