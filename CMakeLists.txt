@@ -27,7 +27,7 @@ endif()
 
 # Add python interface.
 option(BUILD_PYBIND "Build python interface." OFF)
-if (BUILD_PYBYND)
+if (BUILD_PYBIND)
     add_subdirectory(python)
 endif()
 
