@@ -14,7 +14,7 @@ protected:
     using Date = std::vector<uint16_t>;
 
     PersonTest() : 
-        g_{"George MiChael", "bluTh", Date{1988,6,7}} {}
+        g_{"George MiChael", "bluTh", Date{1990,3,3}} {}
 };
 
 // Test constructors.
@@ -40,7 +40,7 @@ TEST_F(PersonTest, AgeTest) {
     // Warning: Changing "today" changes test results.
     Date today{2024,12,31};
 
-    EXPECT_EQ(p_.age(), 255);
+    EXPECT_EQ(p_.age(), 255);  // Default.
     p_.setDoB(Date{2024,1,1});
     p_.calcAge(today);
     EXPECT_EQ(p_.age(), 0);
