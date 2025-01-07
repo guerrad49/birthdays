@@ -27,16 +27,18 @@ protected:
 };
 
 // Test constructors.
-TEST_F(BookTest, ConstructorsTest) {
+TEST_F(BookTest, ConstructorTest) {
     EXPECT_EQ(e_.size(), 0);
     EXPECT_EQ(bb_.size(), 9);
+    EXPECT_EQ(bb_.ids.size(), 9);
 }
 
 // Test appending to book.
 TEST_F(BookTest, AppendTest) {
     e_.append(Person{"steve", "holt"});
     EXPECT_EQ(e_.size(), 1);
-    // Try to append repeat entry.
+
+    // Repeat entry.
     bb_.append(Person{"maeby", "funke", Date{1990,9,22}});
     EXPECT_EQ(bb_.size(), 9);
 }
@@ -45,18 +47,22 @@ TEST_F(BookTest, AppendTest) {
 TEST_F(BookTest, RemoveTest) {
     bb_.remove(Person{"buster", "bluth", Date{1973,9,30}});
     EXPECT_EQ(bb_.size(), 8);
-    // Try to remove entry not in book.
-    bb_.remove(Person{"steve", "holt"});
-    EXPECT_EQ(bb_.size(), 8);
-    e_.remove(Person{"steve", "holt"});
+
+    // Entry not in book.
+    Person sh{"steve", "holt"};
+    e_.remove(sh);
     EXPECT_EQ(e_.size(), 0);
+    bb_.remove(sh);
+    EXPECT_EQ(bb_.size(), 8);
 }
 
 // Test sorting methods.
-TEST_F(BookTest, SortingTest) {
+TEST_F(BookTest, SortTest) {
     bb_.sort(bb_.SORT_CALENDAR);
     std::vector<size_t> order{8,1,3,6,2,7,4,5,0};
     EXPECT_EQ(bb_.ids, order);
+
+    // TODO: Test sorting by lastname.
 
     bb_.update_ages(Date{2024,12,31});
     bb_.sort(bb_.SORT_AGE);
@@ -69,17 +75,18 @@ TEST_F(BookTest, SortingTest) {
 }
 
 // Test filtering methods.
-TEST_F(BookTest, FilteringTest) {
+TEST_F(BookTest, FilterTest) {
     bb_.filter(bb_.FILTER_MONTH, 9);
     std::vector<size_t> filtered{4,5};
     EXPECT_EQ(bb_.ids, filtered);
 
+    // Reset to avoid additional filtering.
     bb_.reset_ids();
-    bb_.filter(bb_.FILTER_LASTNAME, 'f');
-    filtered = std::vector<size_t>{4,6};
+    bb_.filter(bb_.FILTER_LASTNAME, 'b');
+    filtered = std::vector<size_t>{0,1,2,3,5,7,8};
     EXPECT_EQ(bb_.ids, filtered);
 
-    bb_.reset_ids();
+    // Test additional filtering.
     bb_.filter(bb_.FILTER_FIRSTNAME, 'g');
     filtered = std::vector<size_t>{2,3,7};
     EXPECT_EQ(bb_.ids, filtered);
