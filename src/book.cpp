@@ -57,7 +57,7 @@ void Book::remove(const Person& p) {
 
 void Book::update_ages(const std::vector<uint16_t>& tdy) {
     for (Person& q: book_)
-        q.setAge(tdy);
+        q.calcAge(tdy);
 }
 
 void Book::display() {
