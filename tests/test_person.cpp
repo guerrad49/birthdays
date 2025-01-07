@@ -42,10 +42,10 @@ TEST_F(PersonTest, AgeTest) {
 
     EXPECT_EQ(p_.age(), 255);
     p_.setDoB(Date{2024,1,1});
-    p_.setAge(today);
+    p_.calcAge(today);
     EXPECT_EQ(p_.age(), 0);
 
-    g_.setAge(today);
+    g_.calcAge(today);
     EXPECT_EQ(g_.age(), 36);
 }
 
