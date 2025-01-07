@@ -53,8 +53,12 @@ void Person::setDoB(const std::vector<uint16_t>& v) {
 void Person::calcAge(const std::vector<uint16_t>& tdy) {
     uint16_t yearDiff = tdy[0] - dob_[0];
     uint16_t oneOrZero = 0;
-    if ( (tdy[1] < dob_[1]) && (tdy[2] < dob_[2]) )
+
+    std::vector<uint16_t> subTdy{tdy[1], tdy[2]};
+    std::vector<uint16_t> subDob{dob_[1], dob_[2]};
+    if ( subTdy < subDob )
         oneOrZero = 1;
+
     age_ = yearDiff - oneOrZero;
 }
 
