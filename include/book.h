@@ -53,7 +53,7 @@ public:
     /// Create an id for every Person in book_.
     void reset_ids();
 
-    size_t size() { return book_.size(); }
+    size_t size() const { return book_.size(); }
     Person operator[](int index) const;
 
     auto begin() { return book_.begin(); }
