@@ -24,10 +24,3 @@ pybind11_add_module(Book MODULE book_bindings.cpp)
 #     ${PYTHON_LIBRARIES}
 #     pybind11::module
 #     )
-
-# set_target_properties(${PROJECT_NAME}
-#     PROPERTIES
-#     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-#     PREFIX ""
-#     SUFFIX ".$(python3 -c 'import sys; print(sys.implementation.suffix)')"
-#     )
