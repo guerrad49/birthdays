@@ -56,7 +56,7 @@ public:
     void setAge(const uint8_t& age) { age_ = age; }
 
     /**
-     * @brief Compute and set age using today's date.
+     * @brief Calculate and set age using today's date.
      * @param tdy Today's date vector.
      */
     void calcAge(const std::vector<uint16_t>& tdy);
