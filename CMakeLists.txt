@@ -16,7 +16,7 @@ add_subdirectory(src)
 
 # Add testing.
 if (BUILD_TESTING)
-    add_subdirectory(tests)
+    add_subdirectory(tests/cpp)
 endif()
 
 # Add examples.
