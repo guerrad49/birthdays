@@ -18,9 +18,3 @@ link_libraries(${LIB})
 
 pybind11_add_module(Person MODULE person_bindings.cpp)
 pybind11_add_module(Book MODULE book_bindings.cpp)
-
-# target_link_libraries(person
-#     PUBLIC
-#     ${PYTHON_LIBRARIES}
-#     pybind11::module
-#     )
