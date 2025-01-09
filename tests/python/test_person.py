@@ -3,6 +3,7 @@ from itertools import product
 
 from Person import Person
 
+
 class PersonTest(unittest.TestCase):
     def setUp(self):
         self.p = Person()
@@ -12,6 +13,11 @@ class PersonTest(unittest.TestCase):
         self.assertEqual(self.p.firstName, "")
         self.assertEqual(self.p.lastName, "")
         self.assertEqual(self.p.dob, [0,0,0])
+
+    def test_types(self):
+        self.assertIsInstance(self.gmb.firstName, str)
+        self.assertIsInstance(self.gmb.dob, list)
+        self.assertIsInstance(self.gmb, Person)
 
     def test_fullname(self):
         self.assertEqual(
