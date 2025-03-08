@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 3.30)
 
+#===== Begin User Options =====#
+
+option(BUILD_TESTING "Build C++ tests." OFF)
+option(BUILD_EXAMPLES "Build C++ examples." OFF)
+option(BUILD_PYBIND "Build Python bindings." OFF)
+
+#===== End User Options =====#
+
 project(
     practice
-    VERSION 1.0
+    VERSION 0.1.0
     LANGUAGES CXX
 )
 
@@ -14,19 +22,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(LIB Birthdays)
 add_subdirectory(src)
 
-# Add testing.
+# Build tests with GTest.
 if (BUILD_TESTING)
     add_subdirectory(tests/cpp)
 endif()
 
-# Add examples.
-option(BUILD_EXAMPLES "Build the examples." OFF)
+# Build C++ examples.
 if (BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
-# Add python interface.
-option(BUILD_PYBIND "Build python interface." OFF)
+# Build interface with Pybind.
 if (BUILD_PYBIND)
     add_subdirectory(python)
 endif()
