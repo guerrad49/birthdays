@@ -14,7 +14,19 @@ find_package(Python3
 
 find_package(pybind11 CONFIG REQUIRED)
 
-link_libraries(${LIB})
+set(PYLIB "py${LIB}")
+add_library(${PYLIB} MODULE
+    person_bindings.cpp
+    book_bindings.cpp
+    pybirthdays.cpp
+)
 
-pybind11_add_module(Person MODULE person_bindings.cpp)
-pybind11_add_module(Book MODULE book_bindings.cpp)
+target_link_libraries(
+    ${PYLIB} ${LIB} pybind11::module
+)
+
+set_target_properties(
+    ${PYLIB} PROPERTIES
+    PREFIX ""
+    SUFFIC ".so"
+)

@@ -7,9 +7,9 @@
 namespace birthdays::python {
 
 namespace py = pybind11;
-using namespace Birthdays;
+using namespace birthdays;
 
-PYBIND11_MODULE(Book, m) {
+void bind_book_class(pybind11::module_ &m) {
     py::class_<Book>(m, "Book")
         .def(py::init<>())
 
@@ -85,4 +85,4 @@ PYBIND11_MODULE(Book, m) {
     // TODO: Handle enums.
     }
 
-}  // End python namespace.
+}  // End namespace birthdays::python.
