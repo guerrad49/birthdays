@@ -5,7 +5,8 @@
 
 #include "person.h"
 
-namespace Birthdays {
+
+namespace birthdays {
 
 class Book {
 public:
@@ -79,6 +80,6 @@ private:
     std::vector<Person> book_;
 };
 
-}  // End namespace Birthdays.
+}  // End namespace birthdays.
 
 #endif  // BOOK_H

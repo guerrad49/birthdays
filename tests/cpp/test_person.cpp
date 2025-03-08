@@ -2,9 +2,10 @@
 
 #include "person.h"
 
+
 namespace testing {
 
-using namespace Birthdays;
+using namespace birthdays;
 
 class PersonTest : public testing::Test {
 protected:

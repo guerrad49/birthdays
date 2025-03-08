@@ -2,9 +2,10 @@
 
 #include "person.h"
 
-namespace Birthdays {
 
-// Definitions.
+namespace birthdays {
+
+// Person definitions.
 
 Person::Person(
     const std::string& first, 
@@ -91,4 +92,4 @@ bool operator>=(const Person &lhs, const Person &rhs) {
     return !(lhs < rhs);
 }
 
-}  // End namespace Birthdays.
+}  // End namespace birthdays.

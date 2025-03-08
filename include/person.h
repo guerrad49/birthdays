@@ -10,7 +10,8 @@
 #include <iomanip>
 #include <sstream>
 
-namespace Birthdays {
+
+namespace birthdays {
 
 class Person {
 public:
@@ -81,6 +82,6 @@ private:
     uint8_t age_{255};  // Default is max.
 };
 
-}  // End namespace Birthdays.
+}  // End namespace birthdays.
 
 #endif  // PERSON_H

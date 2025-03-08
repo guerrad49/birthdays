@@ -5,7 +5,7 @@
 #include "book.h"
 
 int main() {
-    using namespace Birthdays;
+    using namespace birthdays;
     using Date = std::vector<uint16_t>;
 
     Book bb{

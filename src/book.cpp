@@ -5,7 +5,8 @@
 
 #include "book.h"
 
-namespace Birthdays {
+
+namespace birthdays {
 
 Book::Book(std::initializer_list<Person> list) : book_(list) {
     this->reset_ids();
@@ -148,4 +149,4 @@ void Book::filter(int method, char value) {
     ids = filtered;
 }
 
-}  // End namespace Birthdays.
+}  // End namespace birthdays.

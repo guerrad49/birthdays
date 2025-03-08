@@ -3,10 +3,11 @@
 
 #include "person.h"
 
-namespace py = pybind11;
-using namespace Birthdays;
 
-namespace python {
+namespace birthdays::python {
+
+namespace py = pybind11;
+using namespace birthdays;
 
 PYBIND11_MODULE(Person, m) {
     py::class_<Person>(m, "Person")
