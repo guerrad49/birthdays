@@ -4,11 +4,22 @@ add_library(${LIB}
 )
 
 target_include_directories(${LIB} PUBLIC
-    "${PROJECT_BINARY_DIR}"
-    "${PROJECT_SOURCE_DIR}/include"
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 )
 
 set_target_properties(${LIB}
     PROPERTIES
     LINKER_LANGUAGE CXX
 )
+
+# Installation.
+install(TARGETS ${LIB} 
+    EXPORT ${LIB}Targets
+    DESTINATION lib
+)
+
+install(FILES 
+    ${CMAKE_SOURCE_DIR}/include/book.h 
+    ${CMAKE_SOURCE_DIR}/include/person.h 
+    DESTINATION include)
