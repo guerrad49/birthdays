@@ -18,7 +18,7 @@ set(PYLIB "py${LIB}")
 add_library(${PYLIB} MODULE
     person_bindings.cpp
     book_bindings.cpp
-    pybirthdays.cpp
+    birthday_bindings.cpp
 )
 
 target_link_libraries(

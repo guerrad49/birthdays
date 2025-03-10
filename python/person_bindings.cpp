@@ -4,12 +4,12 @@
 #include "person.h"
 
 
-namespace birthdays::python {
+namespace pybirthdays {
 
 namespace py = pybind11;
 using namespace birthdays;
 
-void bind_person_class(pybind11::module_ &m) {
+void init_person_bind(py::module_ &m) {
     py::class_<Person>(m, "Person")
         .def(py::init<>())
         
@@ -73,4 +73,4 @@ void bind_person_class(pybind11::module_ &m) {
         );
     }
 
-} // End namespace birthdays::python.
+} // End namespace pybirthdays.

@@ -4,12 +4,12 @@
 #include "book.h"
 
 
-namespace birthdays::python {
+namespace pybirthdays {
 
 namespace py = pybind11;
 using namespace birthdays;
 
-void bind_book_class(pybind11::module_ &m) {
+void init_book_bind(py::module_ &m) {
     py::class_<Book>(m, "Book")
         .def(py::init<>())
 
@@ -85,4 +85,4 @@ void bind_book_class(pybind11::module_ &m) {
     // TODO: Handle enums.
     }
 
-}  // End namespace birthdays::python.
+}  // End namespace pybirthdays.
