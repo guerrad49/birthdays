@@ -5,7 +5,7 @@
 
 namespace birthdays {
 
-// Person definitions.
+// Member functions.
 
 Person::Person(
     const std::string& first, 
@@ -69,6 +69,8 @@ std::ostream& operator<<(std::ostream& os, const Person& p) {
         << "," << p.dobStr() << ")";
     return os;
 }
+
+// Non-member functions.
 
 bool operator==(const Person& lhs, const Person& rhs) {
     return (lhs.firstName_ == rhs.firstName_) && 

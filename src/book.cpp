@@ -8,6 +8,8 @@
 
 namespace birthdays {
 
+// Member functions.
+
 Book::Book(std::initializer_list<Person> list) : book_(list) {
     this->reset_ids();
 }
