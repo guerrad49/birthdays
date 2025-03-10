@@ -63,7 +63,9 @@ TEST_F(BookTest, SortTest) {
     std::vector<size_t> order{8,1,3,6,2,7,4,5,0};
     EXPECT_EQ(bb_.ids, order);
 
-    // TODO: Test sorting by lastname.
+    bb_.sort(SORT_LASTNAME);
+    order = std::vector<size_t>{5,3,2,8,0,1,7,4,6};
+    EXPECT_EQ(bb_.ids, order);
 
     bb_.update_ages(Date{2024,12,31});
     bb_.sort(SORT_AGE);

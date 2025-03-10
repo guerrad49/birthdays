@@ -102,18 +102,19 @@ void Book::sort(int method, bool reverse) {
 
         switch(method) {
             case SORT_LASTNAME:
-                return p.lastName_ < q.lastName_;
-                break;
+                // Compare first names in last names equal.
+                if (p.lastName_ == q.lastName_)
+                    return p.firstName_ < q.firstName_;
+                else
+                    return p.lastName_ < q.lastName_;
             case SORT_AGE:
                 return p.age_ < q.age_;
-                break;
             default:  // SORT_CALENDAR
                 // If month is same, compare day.
                 if (p.dob_[1] == q.dob_[1])
                     return p.dob_[2] < q.dob_[2];
                 // Else compare month only.
                 return p.dob_[1] < q.dob_[1];
-                break;
         }
     };
 
