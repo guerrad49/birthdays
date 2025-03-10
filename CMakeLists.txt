@@ -28,7 +28,7 @@ add_subdirectory(src)
 
 # Build C++ examples.
 if (BUILD_EXAMPLES)
-    add_subdirectory(examples)
+    add_subdirectory(examples/cpp)
 endif()
 
 # Build C++ tests.
