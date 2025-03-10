@@ -13,6 +13,7 @@
 
 namespace birthdays {
 
+/// @brief Class to manage a Person's data.
 class Person {
 public:
     friend class Book;

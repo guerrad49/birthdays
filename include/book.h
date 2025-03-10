@@ -8,23 +8,25 @@
 
 namespace birthdays {
 
-class Book {
-public:
-    std::vector<size_t> ids;
-
-    enum SORTING_METHOD
+enum SORTING_METHOD
     {
         SORT_CALENDAR = 1,
         SORT_LASTNAME = 2,
         SORT_AGE = 3
     };
 
-    enum FILTER_METHOD
+enum FILTER_METHOD
     {
         FILTER_MONTH = 1,
         FILTER_LASTNAME = 2,
         FILTER_FIRSTNAME = 3
-    };
+    };    
+
+
+/// @brief A vector-like container of Person objects.
+class Book {
+public:
+    std::vector<size_t> ids;
 
     /// Default constructor.
     Book() = default;
