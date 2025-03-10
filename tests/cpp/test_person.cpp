@@ -3,7 +3,7 @@
 #include "person.h"
 
 
-namespace testing {
+namespace tests {
 
 using namespace birthdays;
 
@@ -61,4 +61,4 @@ TEST_F(PersonTest, ComparisonTest) {
     EXPECT_TRUE(g_ < gmb);
 }
 
-}  // End namespace testing.
+}  // End namespace tests.

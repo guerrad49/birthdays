@@ -3,7 +3,7 @@
 #include "book.h"
 
 
-namespace testing {
+namespace tests {
 
 using namespace birthdays;
 
@@ -59,38 +59,38 @@ TEST_F(BookTest, RemoveTest) {
 
 // Test sorting methods.
 TEST_F(BookTest, SortTest) {
-    bb_.sort(bb_.SORT_CALENDAR);
+    bb_.sort(SORT_CALENDAR);
     std::vector<size_t> order{8,1,3,6,2,7,4,5,0};
     EXPECT_EQ(bb_.ids, order);
 
     // TODO: Test sorting by lastname.
 
     bb_.update_ages(Date{2024,12,31});
-    bb_.sort(bb_.SORT_AGE);
+    bb_.sort(SORT_AGE);
     order = std::vector<size_t>{3,4,5,0,2,1,6,8,7};
     EXPECT_EQ(bb_.ids, order);
 
-    bb_.sort(bb_.SORT_AGE, true);
+    bb_.sort(SORT_AGE, true);
     order = std::vector<size_t>{7,8,6,1,2,0,5,4,3};
     EXPECT_EQ(bb_.ids, order);
 }
 
 // Test filtering methods.
 TEST_F(BookTest, FilterTest) {
-    bb_.filter(bb_.FILTER_MONTH, 9);
+    bb_.filter(FILTER_MONTH, 9);
     std::vector<size_t> filtered{4,5};
     EXPECT_EQ(bb_.ids, filtered);
 
     // Reset to avoid additional filtering.
     bb_.reset_ids();
-    bb_.filter(bb_.FILTER_LASTNAME, 'b');
+    bb_.filter(FILTER_LASTNAME, 'b');
     filtered = std::vector<size_t>{0,1,2,3,5,7,8};
     EXPECT_EQ(bb_.ids, filtered);
 
     // Test additional filtering.
-    bb_.filter(bb_.FILTER_FIRSTNAME, 'g');
+    bb_.filter(FILTER_FIRSTNAME, 'g');
     filtered = std::vector<size_t>{2,3,7};
     EXPECT_EQ(bb_.ids, filtered);
 }
 
-}  // End namespace testing.
+}  // End namespace tests.
