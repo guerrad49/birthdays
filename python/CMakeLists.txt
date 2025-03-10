@@ -30,3 +30,9 @@ set_target_properties(
     PREFIX ""
     SUFFIC ".so"
 )
+
+# Installation.
+install(TARGETS ${PYLIB} 
+    LIBRARY 
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
