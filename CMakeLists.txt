@@ -24,19 +24,19 @@ include(GNUInstallDirs)
 set(LIB Birthdays)
 
 # Library source directory.
-add_subdirectory(src)
+add_subdirectory(cpp/src)
 
 # Build C++ examples.
 if (BUILD_EXAMPLES)
-    add_subdirectory(examples/cpp)
+    add_subdirectory(cpp/examples)
 endif()
 
 # Build C++ tests.
 if (BUILD_GTESTS)
-    add_subdirectory(tests/cpp)
+    add_subdirectory(cpp/tests)
 endif()
 
 # Build interface with Pybind.
 if (BUILD_PYBIND)
-    add_subdirectory(python)
+    add_subdirectory(python/pybind11)
 endif()

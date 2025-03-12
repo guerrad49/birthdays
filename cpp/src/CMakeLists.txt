@@ -4,7 +4,7 @@ add_library(${LIB}
 )
 
 target_include_directories(${LIB} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/cpp/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 )
 
@@ -20,6 +20,6 @@ install(TARGETS ${LIB}
 )
 
 install(FILES 
-    ${CMAKE_SOURCE_DIR}/include/book.h 
-    ${CMAKE_SOURCE_DIR}/include/person.h 
+    ${CMAKE_SOURCE_DIR}/cpp/include/book.h 
+    ${CMAKE_SOURCE_DIR}/cpp/include/person.h 
     DESTINATION include)
