@@ -17,7 +17,16 @@ int main() {
         Person{ "benny", "cobblepot", Date{2015,2,8}}
     };
 
+    std::cout << "Book after initialization." << std::endl;
+    bb.display();
+
+    std::cout << std::endl;
+    std::cout << "Update ages using 2024-12-31." << std::endl;
     bb.update_ages(Date{2024,12,31});
+    bb.display();
+
+    std::cout << std::endl;
+    std::cout << "Using default sort (calendar)." << std::endl;
     bb.sort();
     bb.display();
 
