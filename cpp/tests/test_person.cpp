@@ -18,7 +18,7 @@ protected:
         g_{"George MiChael", "bluTh", Date{1990,3,3}} {}
 };
 
-// Test constructors.
+/// Test constructors.
 TEST_F(PersonTest, ConstructorsTest) {
     Date zero{0,0,0};
 
@@ -30,34 +30,34 @@ TEST_F(PersonTest, ConstructorsTest) {
     EXPECT_EQ(lb.dob(), zero);
 }
     
-// Test formatting of names.
+/// Test formatting of names.
 TEST_F(PersonTest, NameFormatting) {
     EXPECT_EQ(g_.firstName(), "george_michael");
     EXPECT_EQ(g_.fullName(), "george_michael bluth");
 }
 
-// Test age.
+/// Test age.
 TEST_F(PersonTest, AgeTest) {
-    // Warning: Changing "today" changes test results.
-    Date today{2024,12,31};
+    // Warning: Changing date changes test results.
+    Date mockDate{2024,12,31};
 
     EXPECT_EQ(p_.age(), 255);  // Default.
     p_.setDoB(Date{2024,1,1});
-    p_.calcAge(today);
+    p_.calcAge(mockDate);
     EXPECT_EQ(p_.age(), 0);
 
-    g_.calcAge(today);
-    EXPECT_EQ(g_.age(), 36);
+    g_.calcAge(mockDate);
+    EXPECT_EQ(g_.age(), 34);
 }
 
-// Test comparisons.
+/// Test comparisons.
 TEST_F(PersonTest, ComparisonTest) {
-    Person gmb{"georGe michaeL", "Bluth", Date{1988,6,7}};
+    Person gmb{"georGe michaeL", "Bluth", Date{1990,3,3}};
     EXPECT_TRUE(g_ == gmb);
 
-    gmb.setDoB(Date{1988,6,6});
+    gmb.setDoB(Date{1990,3,2});
     EXPECT_TRUE(g_ > gmb);
-    gmb.setDoB(Date{1988,6,8});
+    gmb.setDoB(Date{1990,3,4});
     EXPECT_TRUE(g_ < gmb);
 }
 
