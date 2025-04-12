@@ -95,19 +95,19 @@ Person Book::operator[](int index) const {
     }
 }
 
-void Book::sort(int method, bool reverse) {
+void Book::sort(SORT_METHOD method, bool reverse) {
     auto compare = [this, method] (int i, int j) -> bool {
         const Person &p = book_[i];
         const Person &q = book_[j];
 
         switch(method) {
-            case SORT_LASTNAME:
+            case SORT_METHOD::LASTNAME:
                 // Compare first names in last names equal.
                 if (p.lastName_ == q.lastName_)
                     return p.firstName_ < q.firstName_;
                 else
                     return p.lastName_ < q.lastName_;
-            case SORT_AGE:
+            case SORT_METHOD::AGE:
                 return p.age_ < q.age_;
             default:  // SORT_CALENDAR
                 // If month is same, compare day.
@@ -124,24 +124,24 @@ void Book::sort(int method, bool reverse) {
         std::reverse(ids.begin(), ids.end());
 }
 
-void Book::filter(int method, char value) {
+void Book::filter(FILTER_METHOD method, char value) {
     std::vector<size_t> filtered;
 
     switch(method) {
         // Filter birthdays on month `value`.
-        case FILTER_MONTH:
+        case FILTER_METHOD::MONTH:
             for (size_t i: ids)
                 if (book_[i].dob_[1] == value)
                     filtered.push_back(i);
             break;
         // Filter last names starting with `value`.
-        case FILTER_LASTNAME:
+        case FILTER_METHOD::LASTNAME:
             for (size_t i: ids)
                 if (book_[i].lastName_[0] == value)
                     filtered.push_back(i);
             break;
         // Filter first names starting with `value`.
-        case FILTER_FIRSTNAME:
+        case FILTER_METHOD::FIRSTNAME:
             for (size_t i: ids)
                 if (book_[i].firstName_[0] == value)
                     filtered.push_back(i);

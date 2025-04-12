@@ -8,19 +8,17 @@
 
 namespace birthdays {
 
-enum SORTING_METHOD
-    {
-        SORT_CALENDAR = 1,
-        SORT_LASTNAME = 2,
-        SORT_AGE = 3
-    };
+enum class SORT_METHOD {
+    CALENDAR = 1,
+    LASTNAME = 2,
+    AGE = 3
+};
 
-enum FILTER_METHOD
-    {
-        FILTER_MONTH = 1,
-        FILTER_LASTNAME = 2,
-        FILTER_FIRSTNAME = 3
-    };    
+enum class FILTER_METHOD {
+    MONTH = 1,
+    LASTNAME = 2,
+    FIRSTNAME = 3
+};    
 
 
 /// @brief A vector-like container of Person objects.
@@ -66,11 +64,14 @@ public:
 
     /**
      * @brief Sort book_ ids.
-     * @details Sorting options are given in SORTING_METHOD enum.
+     * @details Sorting options are given in SORT_METHOD enum.
      * @param method The method for sorting.
      * @param reverse The truth value for sorting in reverse.
      */
-    void sort(int method = SORT_CALENDAR, bool reverse = false);
+    void sort(
+        SORT_METHOD method = SORT_METHOD::CALENDAR, 
+        bool reverse = false
+    );
 
     /**
      * @brief Filter book_ ids.
@@ -78,7 +79,7 @@ public:
      * @param method The method for filtering.
      * @param value The value to filter by.
      */
-    void filter(int method, char value);
+    void filter(FILTER_METHOD method, char value);
 
 private:
     std::vector<Person> book_;
