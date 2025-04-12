@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 
 #===== Begin User Options =====#
 
-option(BUILD_GTESTS "Build C++ tests." OFF)
+option(BUILD_TESTS "Build C++ tests." OFF)
 option(BUILD_EXAMPLES "Build C++ examples." OFF)
 option(BUILD_PYBIND "Build Python bindings." OFF)
 
@@ -32,7 +32,7 @@ if (BUILD_EXAMPLES)
 endif()
 
 # Build C++ tests.
-if (BUILD_GTESTS)
+if (BUILD_TESTS)
     add_subdirectory(cpp/tests)
 endif()
 
