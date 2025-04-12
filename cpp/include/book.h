@@ -60,7 +60,9 @@ public:
     Person operator[](int index) const;
 
     auto begin() { return book_.begin(); }
-    auto end() { return book_.end(); }
+    auto   end() { return book_.end(); }
+    auto cbegin() const { return book_.cbegin(); }
+    auto   cend() const { return book_.cend(); }
 
     /**
      * @brief Sort book_ ids.

@@ -71,7 +71,7 @@ void Book::display() {
         return;
     }
 
-    for (const size_t& i: ids) {
+    for (size_t i: ids) {
         std::stringstream ss;
         ss << std::setw(23) << book_[i].fullName()
             << std::setw(13) << book_[i].dobStr()
@@ -130,19 +130,19 @@ void Book::filter(int method, char value) {
     switch(method) {
         // Filter birthdays on month `value`.
         case FILTER_MONTH:
-            for (const size_t &i: ids)
+            for (size_t i: ids)
                 if (book_[i].dob_[1] == value)
                     filtered.push_back(i);
             break;
         // Filter last names starting with `value`.
         case FILTER_LASTNAME:
-            for (const size_t &i: ids)
+            for (size_t i: ids)
                 if (book_[i].lastName_[0] == value)
                     filtered.push_back(i);
             break;
         // Filter first names starting with `value`.
         case FILTER_FIRSTNAME:
-            for (const size_t &i: ids)
+            for (size_t i: ids)
                 if (book_[i].firstName_[0] == value)
                     filtered.push_back(i);
             break;
