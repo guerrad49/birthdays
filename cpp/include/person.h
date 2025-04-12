@@ -40,8 +40,8 @@ public:
     std::string firstName() const { return firstName_; }
     std::string  lastName() const { return lastName_; }
     std::string  fullName() const { return fullName_; }
-    std::vector<uint16_t> dob() { return dob_; }
-    uint16_t age() { return age_; }
+    std::vector<uint16_t> dob() const { return dob_; }
+    uint16_t age() const { return age_; }
     /// Get date-of-birth as ISO-formatted string.
     std::string dobStr() const;
 
