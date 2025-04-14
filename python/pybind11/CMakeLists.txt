@@ -18,6 +18,7 @@ set(PYLIB "py${LIB}")
 add_library(${PYLIB} MODULE
     person_bindings.cpp
     book_bindings.cpp
+    enum_bindings.cpp
     birthday_bindings.cpp
 )
 
