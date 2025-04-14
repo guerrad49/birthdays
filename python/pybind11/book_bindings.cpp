@@ -18,7 +18,8 @@ void init_book_bind(py::module_ &m) {
             for (auto v: values)
                 b.append(v.cast<const Person&>());
             return new Book{b};
-            })
+            }), 
+            py::arg("people")
         )
 
         .def("__getitem__",
@@ -26,6 +27,7 @@ void init_book_bind(py::module_ &m) {
                 return b[index];
             }
         )
+
         .def("__len__",
             [](const Book&b) {
                 return b.size();
@@ -41,19 +43,22 @@ void init_book_bind(py::module_ &m) {
         .def(
             "append", 
             &Book::append, 
-            "Appends a member to Book."
+            "Appends a member to Book.", 
+            py::arg("p")
         )
         
         .def(
             "remove", 
             &Book::remove, 
-            "Removes a member from Book."
+            "Removes a member from Book.", 
+            py::arg("p")
         )
         
         .def(
             "update_ages", 
             &Book::update_ages, 
-            "Updates ages of all members in Book."
+            "Updates ages of all members in Book.", 
+            py::arg("today")
         )
 
         .def(
@@ -70,19 +75,28 @@ void init_book_bind(py::module_ &m) {
 
         .def(
             "sort", 
-            &Book::sort,
-            py::arg("method") = 1, 
+            &Book::sort, 
+            py::arg("method") = SORT_METHOD::CALENDAR, 
             py::arg("reverse") = false, 
             "Sort Book ids by method."
         )
 
         .def(
             "filter", 
-            &Book::filter, 
+            [](Book& b, FILTER_METHOD method, py::object obj) {
+                if (py::isinstance<py::int_>(obj)) {
+                    int val = obj.cast<int>();
+                    b.filter(method, val);
+                }
+                else if (py::isinstance<py::str>(obj)) {
+                    std::string val = obj.cast<std::string>();
+                    b.filter(method, val[0]);
+                }
+            }, 
+            py::arg("method"), 
+            py::arg("value"), 
             "Filter Book ids by method."
         );
-
-    // TODO: Handle enums.
     }
 
 }  // End namespace pybirthdays.
