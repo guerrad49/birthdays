@@ -1,7 +1,9 @@
+import pickle
+import tempfile
 import unittest
 from itertools import product
 
-from Person import Person
+from pyBirthdays import Person
 
 
 class PersonTest(unittest.TestCase):
@@ -24,6 +26,12 @@ class PersonTest(unittest.TestCase):
             self.gmb.fullName, "george_michael bluth"
         )
 
+    def test_comparison(self):
+        p1 = Person("george michael", "bluth", [1990,3,3])
+        self.assertEqual(self.gmb, p1)
+        p1.lastName = "funke"
+        self.assertNotEqual(self.gmb, p1)
+
     def test_age(self):
         self.p.dob = [1978,6,7]
 
@@ -39,6 +47,14 @@ class PersonTest(unittest.TestCase):
             self.assertEqual(a, 45)
         for a in ages[change:]:
             self.assertEqual(a, 46)
+
+    def test_pickling(self):
+        with tempfile.NamedTemporaryFile() as fp:
+            pickle.dump(self.gmb, fp)
+            fp.flush()  # Ensure data is written to file.
+            fp.seek(0)
+            loaded_obj = pickle.load(fp)
+            self.assertEqual(self.gmb, loaded_obj)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/operators.h>
 
 #include "person.h"
 
@@ -30,6 +31,9 @@ void init_person_bind(py::module_ &m) {
                 return oss.str();
             }
         )
+
+        // Binds operator== to __eq__.
+        .def(py::self == py::self)
 
         .def_property(
             "firstName", 
@@ -69,8 +73,28 @@ void init_person_bind(py::module_ &m) {
         .def(
             "calcAge", 
             &Person::calcAge, 
-            "Calculate Person's age."
-        );
+            "Calculate Person's age.", 
+            py::arg("today")
+        )
+        
+        .def(py::pickle(
+            [](const Person& p) { // __getstate__
+                return py::make_tuple(
+                    p.firstName(),
+                    p.lastName(),
+                    p.dob()
+                );
+            },
+            [](const py::tuple& t) { // __setstate__
+                if (t.size() != 3)
+                    throw std::runtime_error("Invalid state!");
+                std::string fn = t[0].cast<std::string>();
+                std::string ln = t[1].cast<std::string>();
+                std::vector<uint16_t> dob = t[2].cast<std::vector<uint16_t>>();
+                return Person{fn, ln, dob};
+            }
+        ))
+        ;
     }
 
 } // End namespace pybirthdays.
