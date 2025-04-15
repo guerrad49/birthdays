@@ -52,6 +52,7 @@ def parse_args():
     
     args = p.parse_args()
 
+    # Check domain for argument with many options.
     if args.month and args.month not in range(1,13):
         p.error('error: --month must be integer between 1 and 12 inclusive.')
     if args.last and args.last not in string.ascii_letters:
@@ -75,22 +76,18 @@ if __name__ == '__main__':
         elif args.sort == 'age':
             bb.sort(pyBirthdays.SORT_AGE)
 
-    if args.append:
+    if args.append or args.remove:
         p = pyBirthdays.Person(
             args.append[0], 
             args.append[1], 
             [int(x) for x in args.append[2].split('-')]
             )
-        bb.append(p)
-        update(args.file, bb)
-    elif args.remove:
-        p = pyBirthdays.Person(
-            args.remove[0], 
-            args.remove[1], 
-            [int(x) for x in args.remove[2].split('-')]
-            )
-        bb.remove(p)
-        update(args.file, bb)
+        if args.append:
+            bb.append(p)
+            update(args.file, bb)
+        else:  # args.remove
+            bb.remove(p)
+            update(args.file, bb)
     
     if args.month:
         bb.filter(pyBirthdays.FILTER_MONTH, args.month)
@@ -101,7 +98,7 @@ if __name__ == '__main__':
     elif args.first:
         bb.filter(pyBirthdays.FILTER_FIRSTNAME, args.first)
 
-    # Finish by displaying the book.
+    # Always display book when finished.
     tdy = date.today()
     bb.update_ages([tdy.year, tdy.month, tdy.day])
     bb.display()
