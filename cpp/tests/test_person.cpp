@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "person.h"
+#include "person.hh"
 
 
 namespace tests {

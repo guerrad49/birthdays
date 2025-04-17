@@ -1,6 +1,6 @@
 #include <regex>
 
-#include "person.h"
+#include "person.hh"
 
 
 namespace birthdays {
@@ -11,7 +11,7 @@ Person::Person(
     const std::string& first, 
     const std::string& last, 
     const std::vector<uint16_t>& dob
-    ) {
+) {
     this->setFirstName(first);
     this->setLastName(last);
     this->setFullName();
