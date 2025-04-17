@@ -1,9 +1,9 @@
-#ifndef BOOK_H
-#define BOOK_H
+#ifndef BOOK_HH
+#define BOOK_HH
 
 #include <initializer_list>
 
-#include "person.h"
+#include "person.hh"
 
 
 namespace birthdays {
@@ -87,4 +87,4 @@ private:
 
 }  // End namespace birthdays.
 
-#endif  // BOOK_H
+#endif  // BOOK_HH

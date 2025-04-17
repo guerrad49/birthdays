@@ -1,5 +1,5 @@
-#ifndef PERSON_H
-#define PERSON_H
+#ifndef PERSON_HH
+#define PERSON_HH
 
 #include <iostream>
 #include <string>
@@ -85,4 +85,4 @@ private:
 
 }  // End namespace birthdays.
 
-#endif  // PERSON_H
+#endif  // PERSON_HH
