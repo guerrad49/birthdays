@@ -1,9 +1,13 @@
+#ifndef UTILS_HH
+#define UTILS_HH
+
+#include <array>
 #include <cstdint>
-#include <vector>
+
 
 namespace birthdays {
 
-bool isDateValid(std::vector<uint16_t> date) {
+bool is_valid_date(const std::array<uint16_t,3>& date) {
     uint16_t  year = date[0];
     uint16_t month = date[1];
     uint16_t   day = date[2];
@@ -22,3 +26,5 @@ bool isDateValid(std::vector<uint16_t> date) {
 }
 
 }  // End namespace birthdays.
+
+#endif  // UTILS_HH
