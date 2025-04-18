@@ -1,6 +1,8 @@
 #include <regex>
+#include <stdexcept>
 
 #include "person.hh"
+#include "utils.hh"
 
 
 namespace birthdays {
@@ -10,7 +12,7 @@ namespace birthdays {
 Person::Person(
     const std::string& first, 
     const std::string& last, 
-    const std::vector<uint16_t>& dob
+    const DateArray& dob
 ) {
     this->setFirstName(first);
     this->setLastName(last);
@@ -47,16 +49,19 @@ void Person::setFullName() {
     fullName_ = firstName_ + " " + lastName_;
 }
 
-void Person::setDoB(const std::vector<uint16_t>& v) {
-    dob_ = v;
+void Person::setDoB(const DateArray& v) {
+    if (is_valid_date(v))
+        dob_ = v;
+    else
+        throw std::domain_error("ERROR: Invalid date.");
 }
 
-void Person::calcAge(const std::vector<uint16_t>& tdy) {
+void Person::calcAge(const DateArray& tdy) {
     uint16_t yearDiff = tdy[0] - dob_[0];
     uint16_t oneOrZero = 0;
 
-    std::vector<uint16_t> subTdy{tdy[1], tdy[2]};
-    std::vector<uint16_t> subDob{dob_[1], dob_[2]};
+    std::array<uint16_t,2> subTdy{tdy[1], tdy[2]};
+    std::array<uint16_t,2> subDob{dob_[1], dob_[2]};
     if ( subTdy < subDob )
         oneOrZero = 1;
 

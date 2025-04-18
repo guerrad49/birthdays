@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <cctype>
@@ -12,6 +12,8 @@
 
 
 namespace birthdays {
+
+using DateArray = std::array<uint16_t,3>;
 
 /// @brief Class to manage a Person's data.
 class Person {
@@ -26,12 +28,12 @@ public:
      * @details Creates Person with given data.
      * @param first The first name.
      * @param last The last name.
-     * @param dob The date-of-birth ISO vector <year,month,day>.
+     * @param dob The date-of-birth array i.e. <year,month,day>.
      */
     Person(
         const std::string& first, 
         const std::string& last, 
-        const std::vector<uint16_t>& dob = std::vector<uint16_t> {0,0,0}
+        const DateArray& dob
         );
     
     /// Destructor.
@@ -40,7 +42,7 @@ public:
     std::string firstName() const { return firstName_; }
     std::string  lastName() const { return lastName_; }
     std::string  fullName() const { return fullName_; }
-    std::vector<uint16_t> dob() const { return dob_; }
+    DateArray dob() const { return dob_; }
     uint16_t age() const { return age_; }
     /// Get date-of-birth as ISO-formatted string.
     std::string dobStr() const;
@@ -54,14 +56,14 @@ public:
     void setFirstName(const std::string& str);
     void setLastName(const std::string& str);
     void setFullName();
-    void setDoB(const std::vector<uint16_t>& v);
+    void setDoB(const DateArray& v);
     void setAge(const uint8_t& age) { age_ = age; }
 
     /**
      * @brief Calculate and set age using today's date.
-     * @param tdy Today's date vector.
+     * @param tdy Today's date array.
      */
-    void calcAge(const std::vector<uint16_t>& tdy);
+    void calcAge(const DateArray& tdy);
 
 protected:
     /// Person string representation.
@@ -69,7 +71,7 @@ protected:
 
     /// Determine equality between two Person objects.
     friend bool operator==(const Person& lhs, const Person& rhs);
-    /// Compare using dob vector comparison.
+    /// Compare using dob array comparison.
     friend bool operator<(const Person& lhs, const Person& rhs);
     friend bool operator>(const Person& lhs, const Person& rhs);
     friend bool operator<=(const Person& lhs, const Person& rhs);
@@ -79,7 +81,7 @@ private:
     std::string firstName_;
     std::string lastName_;
     std::string fullName_;
-    std::vector<uint16_t> dob_{0,0,0};  // Default is min.
+    DateArray dob_;
     uint8_t age_{255};  // Default is max.
 };
 
