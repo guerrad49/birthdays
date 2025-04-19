@@ -20,6 +20,6 @@ install(TARGETS ${LIB}
 )
 
 install(FILES 
-    ${CMAKE_SOURCE_DIR}/cpp/include/book.h 
-    ${CMAKE_SOURCE_DIR}/cpp/include/person.h 
+    ${CMAKE_SOURCE_DIR}/cpp/include/book.hh 
+    ${CMAKE_SOURCE_DIR}/cpp/include/person.hh 
     DESTINATION include)

@@ -27,5 +27,6 @@ foreach(EXE IN LISTS TEST_EXES)
 endforeach()
 
 include(GoogleTest)
+
 gtest_discover_tests(test_person)
 gtest_discover_tests(test_book)
