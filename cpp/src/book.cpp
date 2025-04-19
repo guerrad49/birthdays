@@ -58,7 +58,7 @@ void Book::remove(const Person& p) {
     book_.erase(book_.begin() + index);
 }
 
-void Book::update_ages(const std::vector<uint16_t>& tdy) {
+void Book::update_ages(const DateArray& tdy) {
     for (Person& q: book_)
         q.calcAge(tdy);
 }
@@ -101,6 +101,12 @@ void Book::sort(SORT_METHOD method, bool reverse) {
         const Person &q = book_[j];
 
         switch(method) {
+            case SORT_METHOD::CALENDAR:
+                // If month is same, compare day.
+                if (p.dob_[1] == q.dob_[1])
+                    return p.dob_[2] < q.dob_[2];
+                // Else compare month only.
+                return p.dob_[1] < q.dob_[1];
             case SORT_METHOD::LASTNAME:
                 // Compare first names in last names equal.
                 if (p.lastName_ == q.lastName_)
@@ -109,12 +115,10 @@ void Book::sort(SORT_METHOD method, bool reverse) {
                     return p.lastName_ < q.lastName_;
             case SORT_METHOD::AGE:
                 return p.age_ < q.age_;
-            default:  // SORT_CALENDAR
-                // If month is same, compare day.
-                if (p.dob_[1] == q.dob_[1])
-                    return p.dob_[2] < q.dob_[2];
-                // Else compare month only.
-                return p.dob_[1] < q.dob_[1];
+            default:
+                throw std::domain_error(
+                    "ERROR: Invalid sorting choice."
+                );
         }
     };
 

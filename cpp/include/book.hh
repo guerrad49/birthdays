@@ -1,6 +1,7 @@
 #ifndef BOOK_HH
 #define BOOK_HH
 
+#include <vector>
 #include <initializer_list>
 
 #include "person.hh"
@@ -8,22 +9,21 @@
 
 namespace birthdays {
 
-enum class SORT_METHOD {
-    CALENDAR = 1,
-    LASTNAME = 2,
-    AGE = 3
-};
-
-enum class FILTER_METHOD {
-    MONTH = 1,
-    LASTNAME = 2,
-    FIRSTNAME = 3
-};    
-
-
 /// @brief A vector-like container of Person objects.
 class Book {
 public:
+    enum class SORT_METHOD {
+        CALENDAR = 1,
+        LASTNAME = 2,
+        AGE = 3
+    };
+
+    enum class FILTER_METHOD {
+        MONTH = 1,
+        LASTNAME = 2,
+        FIRSTNAME = 3
+    };
+
     std::vector<size_t> ids;
 
     /// Default constructor.
@@ -46,7 +46,7 @@ public:
      */
     void remove(const Person& p);
 
-    void update_ages(const std::vector<uint16_t>& tdy);
+    void update_ages(const DateArray& tdy);
 
     /// Prints book_ elements using ids as order.
     void display();
