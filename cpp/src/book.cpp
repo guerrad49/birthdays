@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 #include "book.hh"
+#include "utils.hh"
 
 
 namespace birthdays {
@@ -18,7 +19,7 @@ void Book::append(const Person& p) {
     for (const Person& q: book_) {
         if (p == q) {
             std::cout << "INFO - Book.append: " << p
-                << " already in Book!" << 
+                << " already in Book." << 
                 std::endl;
             return;
         }
@@ -49,7 +50,7 @@ void Book::remove(const Person& p) {
 
     if (!entryFound) {
         std::cout << "INFO - Book.remove: " << p
-            << " not found!" << 
+            << " not found." << 
             std::endl;
         return;
     }
@@ -116,9 +117,7 @@ void Book::sort(SORT_METHOD method, bool reverse) {
             case SORT_METHOD::AGE:
                 return p.age_ < q.age_;
             default:
-                throw std::domain_error(
-                    "ERROR: Invalid sorting choice."
-                );
+                throw BirthdayError("Invalid sorting method.");
         }
     };
 
@@ -134,22 +133,30 @@ void Book::filter(FILTER_METHOD method, char value) {
     switch(method) {
         // Filter birthdays on month `value`.
         case FILTER_METHOD::MONTH:
+            if ( !is_valid_month(value) )
+                throw BirthdayError("Invalid month value.");
             for (size_t i: ids)
                 if (book_[i].dob_[1] == value)
                     filtered.push_back(i);
             break;
         // Filter last names starting with `value`.
         case FILTER_METHOD::LASTNAME:
+            if ( !is_valid_letter(value) )
+                throw BirthdayError("Invalid letter value.");
             for (size_t i: ids)
                 if (book_[i].lastName_[0] == value)
                     filtered.push_back(i);
             break;
         // Filter first names starting with `value`.
         case FILTER_METHOD::FIRSTNAME:
+            if ( !is_valid_letter(value) )
+                throw BirthdayError("Invalid letter value.");
             for (size_t i: ids)
                 if (book_[i].firstName_[0] == value)
                     filtered.push_back(i);
             break;
+        default:
+            throw BirthdayError("Invalid filtering method.");
     }
     
     ids.clear();

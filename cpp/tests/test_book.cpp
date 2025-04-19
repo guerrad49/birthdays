@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "book.hh"
+#include "utils.hh"
 
 
 namespace tests {
@@ -11,8 +12,6 @@ class BookTest : public testing::Test {
 protected:
     Book e_;  // Empty book.
     Book bb_;
-
-    // using DateArray = std::vector<uint16_t>;
 
     BookTest() : bb_{
         Person{"michael", "bluth", DateArray{1967,12,14}},
@@ -79,12 +78,25 @@ TEST_F(BookTest, SortTest) {
 
 // Test filtering methods.
 TEST_F(BookTest, FilterTest) {
+    // Test domain of month filter..
+    EXPECT_THROW(
+        bb_.filter(Book::FILTER_METHOD::MONTH, 0),
+        BirthdayError
+    );
+
     bb_.filter(Book::FILTER_METHOD::MONTH, 9);
     std::vector<size_t> filtered{4,5};
     EXPECT_EQ(bb_.ids, filtered);
 
     // Reset to avoid additional filtering.
     bb_.reset_ids();
+
+    // Test domain of lastname/firstname filters.
+    EXPECT_THROW(
+        bb_.filter(Book::FILTER_METHOD::LASTNAME, '?'),
+        BirthdayError
+    );
+
     bb_.filter(Book::FILTER_METHOD::LASTNAME, 'b');
     filtered = std::vector<size_t>{0,1,2,3,5,7,8};
     EXPECT_EQ(bb_.ids, filtered);
