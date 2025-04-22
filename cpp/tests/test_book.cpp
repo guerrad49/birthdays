@@ -35,17 +35,18 @@ TEST_F(BookTest, ConstructorTest) {
 
 // Test appending to book.
 TEST_F(BookTest, AppendTest) {
-    e_.append(Person{"steve", "holt", DateArray{1990,1,10}});
+    Person sh{"steve", "holt", DateArray{1990,1,10}};
+    e_.append(sh);
     EXPECT_EQ(e_.size(), 1);
 
     // Repeat entry.
-    bb_.append(Person{"maeby", "funke", DateArray{1990,9,22}});
+    bb_.append(bb_[4]);  // Try to re-add Maeby.
     EXPECT_EQ(bb_.size(), 9);
 }
 
 // Test removing from book.
 TEST_F(BookTest, RemoveTest) {
-    bb_.remove(Person{"buster", "bluth", DateArray{1973,9,30}});
+    bb_.remove(bb_[5]);  // Remove Buster.
     EXPECT_EQ(bb_.size(), 8);
 
     // Entry not in book.
