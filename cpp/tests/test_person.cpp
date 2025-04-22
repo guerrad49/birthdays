@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "person.hh"
+#include "utils.hh"
 
 
 namespace tests {
@@ -25,16 +26,16 @@ TEST_F(PersonTest, NameFormatting) {
 /// Test date-of-birth.
 TEST_F(PersonTest, DobTest) {
     DateArray d1{0,0,0};
-    EXPECT_THROW(p_.setDoB(d1), std::domain_error);
+    EXPECT_THROW(p_.setDoB(d1), BirthdayError);
 
     DateArray d2{2025,1,32};
-    EXPECT_THROW(p_.setDoB(d2), std::domain_error);
+    EXPECT_THROW(p_.setDoB(d2), BirthdayError);
 
     DateArray d3{2025,2,29};
-    EXPECT_THROW(p_.setDoB(d3), std::domain_error);
+    EXPECT_THROW(p_.setDoB(d3), BirthdayError);
 
     DateArray d4{2025,13,1};
-    EXPECT_THROW(p_.setDoB(d4), std::domain_error);
+    EXPECT_THROW(p_.setDoB(d4), BirthdayError);
 
     DateArray d5{2024,2,29};  // Leap year.
     EXPECT_NO_THROW(p_.setDoB(d5));

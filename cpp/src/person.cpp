@@ -53,7 +53,7 @@ void Person::setDoB(const DateArray& v) {
     if (is_valid_date(v))
         dob_ = v;
     else
-        throw std::domain_error("ERROR: Invalid date.");
+        throw BirthdayError("Invalid date.");
 }
 
 void Person::calcAge(const DateArray& tdy) {
