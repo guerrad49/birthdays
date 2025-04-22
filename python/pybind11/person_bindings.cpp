@@ -2,7 +2,7 @@
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
 
-#include "person.h"
+#include "person.hh"
 
 
 namespace pybirthdays {
@@ -15,13 +15,9 @@ void init_person_bind(py::module_ &m) {
         .def(py::init<>())
         
         .def(py::init<
-            const std::string &, 
-            const std::string &, 
-            const std::vector<uint16_t> &
+            const std::string &, const std::string &, const DateArray &
             >(),
-            py::arg("first") = "",
-            py::arg("last") = "",
-            py::arg("dob") = std::vector<uint16_t>{0,0,0}
+            py::arg("first"), py::arg("last"), py::arg("dob")
         )
         
         .def("__repr__",
@@ -90,7 +86,7 @@ void init_person_bind(py::module_ &m) {
                     throw std::runtime_error("Invalid state!");
                 std::string fn = t[0].cast<std::string>();
                 std::string ln = t[1].cast<std::string>();
-                std::vector<uint16_t> dob = t[2].cast<std::vector<uint16_t>>();
+                DateArray dob = t[2].cast<DateArray>();
                 return Person{fn, ln, dob};
             }
         ))
