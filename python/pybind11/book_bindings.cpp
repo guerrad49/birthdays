@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "book.h"
+#include "book.hh"
 
 
 namespace pybirthdays {
@@ -76,14 +76,14 @@ void init_book_bind(py::module_ &m) {
         .def(
             "sort", 
             &Book::sort, 
-            py::arg("method") = SORT_METHOD::CALENDAR, 
+            py::arg("method") = Book::SORT_METHOD::CALENDAR, 
             py::arg("reverse") = false, 
             "Sort Book ids by method."
         )
 
         .def(
             "filter", 
-            [](Book& b, FILTER_METHOD method, py::object obj) {
+            [](Book& b, Book::FILTER_METHOD method, py::object obj) {
                 if (py::isinstance<py::int_>(obj)) {
                     int val = obj.cast<int>();
                     b.filter(method, val);
