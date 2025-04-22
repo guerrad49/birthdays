@@ -15,9 +15,13 @@ void init_person_bind(py::module_ &m) {
         .def(py::init<>())
         
         .def(py::init<
-            const std::string &, const std::string &, const DateArray &
+            const std::string &, 
+            const std::string &, 
+            const DateArray &
             >(),
-            py::arg("first"), py::arg("last"), py::arg("dob")
+            py::arg("first"), 
+            py::arg("last"), 
+            py::arg("dob")
         )
         
         .def("__repr__",
