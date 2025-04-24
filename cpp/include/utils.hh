@@ -1,5 +1,4 @@
-#ifndef UTILS_HH
-#define UTILS_HH
+#pragma once
 
 #include <array>
 #include <string>
@@ -51,5 +50,3 @@ inline bool is_valid_letter(char c) {
 }
 
 }  // End namespace birthdays.
-
-#endif  // UTILS_HH

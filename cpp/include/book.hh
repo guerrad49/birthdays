@@ -1,5 +1,4 @@
-#ifndef BOOK_HH
-#define BOOK_HH
+#pragma once
 
 #include <vector>
 #include <initializer_list>
@@ -86,5 +85,3 @@ private:
 };
 
 }  // End namespace birthdays.
-
-#endif  // BOOK_HH
