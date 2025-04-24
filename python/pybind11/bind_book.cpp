@@ -9,7 +9,7 @@ namespace pybirthdays {
 namespace py = pybind11;
 using namespace birthdays;
 
-void init_book_bind(py::module_ &m) {
+void init_bind_book(py::module_ &m) {
     py::class_<Book>(m, "Book")
         .def(py::init<>())
 

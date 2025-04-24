@@ -1,6 +1,7 @@
 #include <pybind11/pybind11.h>
 
 #include "book.hh"
+#include "utils.hh"
 
 
 namespace pybirthdays {
@@ -8,7 +9,7 @@ namespace pybirthdays {
 namespace py = pybind11;
 using namespace birthdays;
 
-void init_enums_bind(py::module_ &m) {    
+void init_bind_enums(py::module_ &m) {    
     py::enum_<Book::SORT_METHOD>(m, "SORT_METHOD")
         .value("SORT_CALENDAR", Book::SORT_METHOD::CALENDAR)
         .value("SORT_LASTNAME", Book::SORT_METHOD::LASTNAME)
@@ -22,6 +23,10 @@ void init_enums_bind(py::module_ &m) {
         .value("FILTER_FIRSTNAME", Book::FILTER_METHOD::FIRSTNAME)
         .export_values()
         ;
+}
+
+void init_bind_error(py::module_ &m) {
+    py::register_exception<BirthdayError>(m, "BirthdayError");
 }
 
 }  // End namespace pybirthdays.
