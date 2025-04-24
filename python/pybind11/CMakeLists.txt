@@ -29,7 +29,7 @@ target_link_libraries(
 set_target_properties(
     ${PYLIB} PROPERTIES
     PREFIX ""
-    SUFFIC ".so"
+    SUFFIX ".so"
 )
 
 # Installation.
