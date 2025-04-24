@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
-sys.path.append("~/Programming/c_cpp/birthdays/install/lib")
-
 import pickle
-import string
 import argparse
 from datetime import date
 
@@ -51,14 +47,6 @@ def parse_args():
         help='filter entries who\'s last name begins with given letter')
     
     args = p.parse_args()
-
-    # Check domain for argument with many options.
-    if args.month and args.month not in range(1,13):
-        p.error('error: --month must be integer between 1 and 12 inclusive.')
-    if args.last and args.last not in string.ascii_letters:
-        p.error('error: --last must be a letter in the alphabet.')
-    if args.first and args.first not in string.ascii_letters:
-        p.error('error: --first must be a letter in the alphabet.')
         
     return args
 
