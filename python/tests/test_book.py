@@ -31,7 +31,7 @@ class BookTest(unittest.TestCase):
 
     def test_append(self):
         startSize = len(self.bb)
-        p = Person("steve", "holt")
+        p = Person("steve", "holt", [1990,1,10])
         self.bb.append(p)
         self.assertEqual(len(self.bb), startSize+1)
         self.assertEqual(len(self.bb.ids), startSize+1)
