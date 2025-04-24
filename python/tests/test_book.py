@@ -88,12 +88,27 @@ class BookTest(unittest.TestCase):
         self.assertEqual(self.bb.ids, reversed)
 
     def test_filter(self):
+        self.assertRaises(
+            RuntimeError, 
+            self.bb.filter, 
+            method = pyBirthdays.FILTER_MONTH, 
+            value = 0
+            )
+
         self.bb.filter(pyBirthdays.FILTER_MONTH, 9)
         filtered = [4,5]
         self.assertEqual(self.bb.ids, filtered)
 
         # Reset to avoid additional filtering.
         self.bb.reset_ids()
+        
+        self.assertRaises(
+            RuntimeError, 
+            self.bb.filter, 
+            pyBirthdays.FILTER_LASTNAME, 
+            '?'
+        )
+        
         self.bb.filter(pyBirthdays.FILTER_LASTNAME, 'b')
         filtered = [0,1,2,3,5,7,8]
         self.assertEqual(self.bb.ids, filtered)
