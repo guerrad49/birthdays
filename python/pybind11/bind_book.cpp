@@ -25,7 +25,8 @@ void init_bind_book(py::module_ &m) {
         .def("__getitem__",
             [](const Book& b, int index) {
                 return b[index];
-            }
+            }, 
+            py::arg("index")
         )
 
         .def("__len__",
@@ -64,7 +65,7 @@ void init_bind_book(py::module_ &m) {
         .def(
             "display", 
             &Book::display,
-            "Formatted print of Book using ids."
+            "Prints formatted Book ordered by ids."
         )
         
         .def(

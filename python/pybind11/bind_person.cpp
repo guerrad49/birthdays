@@ -25,15 +25,18 @@ void init_bind_person(py::module_ &m) {
         )
         
         .def("__repr__",
-            [](const Person& p) {
+            [](const Person& self) {
                 std::ostringstream oss;
-                oss << p;
+                oss << self;
                 return oss.str();
             }
         )
 
         // Binds operator== to __eq__.
-        .def(py::self == py::self)
+        .def(
+            py::self == py::self, 
+            py::arg("other")
+        )
 
         .def_property(
             "firstName", 
@@ -78,11 +81,12 @@ void init_bind_person(py::module_ &m) {
         )
         
         .def(py::pickle(
-            [](const Person& p) { // __getstate__
+            [](const Person& self) { // __getstate__
+                /* Tuple that fully encodes the object state. */
                 return py::make_tuple(
-                    p.firstName(),
-                    p.lastName(),
-                    p.dob()
+                    self.firstName(),
+                    self.lastName(),
+                    self.dob()
                 );
             },
             [](const py::tuple& t) { // __setstate__
@@ -91,7 +95,8 @@ void init_bind_person(py::module_ &m) {
                 std::string fn = t[0].cast<std::string>();
                 std::string ln = t[1].cast<std::string>();
                 DateArray dob = t[2].cast<DateArray>();
-                return Person{fn, ln, dob};
+                /* Return a newly created C++ instance. */
+                return new Person{fn, ln, dob};
             }
         ))
         ;
