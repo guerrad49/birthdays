@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from itertools import product
 
-from pyBirthdays import Person
+from pyBirthdays import Person, BirthdayError
 
 
 class PersonTest(unittest.TestCase):
@@ -26,11 +26,15 @@ class PersonTest(unittest.TestCase):
             self.gmb.fullName, "george_michael bluth"
         )
 
-    def test_comparison(self):
-        p1 = Person("george michael", "bluth", [1990,3,3])
-        self.assertEqual(self.gmb, p1)
-        p1.lastName = "funke"
-        self.assertNotEqual(self.gmb, p1)
+    def test_dob(self):
+        with self.assertRaises(BirthdayError) as ctx:
+            self.p.dob = [0,0,0]
+        with self.assertRaises(BirthdayError) as ctx:
+            self.p.dob = [2025,1,32]
+        with self.assertRaises(BirthdayError) as ctx:
+            self.p.dob = [2025,2,29]
+        with self.assertRaises(BirthdayError) as ctx:
+            self.p.dob = [2024,13,1]
 
     def test_age(self):
         self.p.dob = [1978,6,7]
@@ -48,6 +52,13 @@ class PersonTest(unittest.TestCase):
         for a in ages[change:]:
             self.assertEqual(a, 46)
 
+    def test_comparison(self):
+        p1 = Person("george michael", "bluth", [1990,3,3])
+        self.assertEqual(self.gmb, p1)
+        p1.lastName = "funke"
+        self.assertNotEqual(self.gmb, p1)
+
+    # Test the pickling bindings for Person.
     def test_pickling(self):
         with tempfile.NamedTemporaryFile() as fp:
             pickle.dump(self.gmb, fp)
