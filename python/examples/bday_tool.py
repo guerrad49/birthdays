@@ -5,7 +5,7 @@ import argparse
 from datetime import date
 
 import pyBirthdays
-
+import pdb
 
 #=======================================================================
 
@@ -77,7 +77,8 @@ if __name__ == '__main__':
             bb.remove(p)
             update(args.file, bb)
     
-    if args.month:
+    # Compare to none since month can store 0.
+    if args.month is not None:
         bb.filter(pyBirthdays.FILTER_MONTH, args.month)
         # Assume user would want to sort dates.
         bb.sort()  # Use default sort i.e. calendar.
