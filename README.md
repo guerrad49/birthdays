@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="logo/birthdays.png" width="500" height="200">
+<img src="logo/birthdays_black.png" width="500" height="200">
 </h1>
 
 
