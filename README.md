@@ -1,3 +1,8 @@
+<h1 align="center">
+<img src="logo/birthdays.png" width="500" height="200">
+</h1>
+
+
 ## Library
 Birthdays is a C++ library for managing a database of birthdays. It provides:
 * a Person object to manage individual information
