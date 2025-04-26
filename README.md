@@ -27,8 +27,8 @@ The user has the following CMake options which all default to `OFF`:
 
 Birthdays can be built following the steps below:
 ```
-    git clone https://github.com/guerrad49/lib_example.git
-    cd lib_example
+    git clone https://github.com/guerrad49/birthdays.git
+    cd birthdays
     mkdir build
     cmake ..
     make
