@@ -41,4 +41,4 @@ The Python interface adds "state" functionality which can be used in conjuction 
 ```
     python3 /path/to/example/bday_tool.py -h
 ```
-to see usage instructions.
+to see usage.
