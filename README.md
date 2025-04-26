@@ -4,7 +4,7 @@
 
 
 ## Library
-Birthdays is a C++ library for managing a database of birthdays. It provides:
+Birthdays is a C++ library for managing a database of birthdays on MacOS. It provides:
 * a Person object to manage individual information
 * a Book object which is a list-like container of Person objects
 
@@ -14,9 +14,9 @@ A Person is created by passing *First Name*, *Last Name*, and *Date-of-Birth* (y
 
 
 ## Pre-Requisites
-At minimum, `CMake` is required to build the library. Optionally:
-* `googletest` to build C++ unit tests
-* `pybind11` to build Python interface
+At minimum, [CMake](https://cmake.org/) is required to build the library. Optionally:
+* [GoogleTest](https://google.github.io/googletest/quickstart-cmake.html) to build C++ unit tests
+* [pybind11](https://pybind11.readthedocs.io/en/stable/installing.html) to build Python interface
 
 
 ## Build
@@ -33,7 +33,12 @@ Birthdays can be built following the steps below:
     cmake ..
     make
 ```
+However, the user can simply choose to user the pre-installed library located in `/path/to/install/`.
 
 
 ## Python
-The Python interface adds "state" functionality which can be used in conjuction with the `pickle` module. The user can use the pre-installed shared-object in the `install` directory by adding `/path/to/install` to their `PYTHONPATH`. The user can then run unittests and examples provided under the `python` directory. The `python/examples` provideds a tool using Birthdays efficiently. Run `/path/to/example/bday_tool.py -h` to see usage instructions.
+The Python interface adds "state" functionality which can be used in conjuction with the `pickle` module. The user can use the pre-installed shared-object in the `install` directory by adding `/path/to/install/lib` to their `PYTHONPATH`. The user can then run unittests and examples provided under the `python` directory. The `python/examples` provideds a tool for using Birthdays efficiently. Run 
+```
+    python3 /path/to/example/bday_tool.py -h
+```
+to see usage instructions.
