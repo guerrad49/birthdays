@@ -40,42 +40,42 @@ void init_bind_person(py::module_ &m) {
 
         .def_property(
             "firstName", 
-            &Person::firstName, 
-            &Person::setFirstName,
+            &Person::first_name, 
+            &Person::set_first_name,
             "The Person's (formatted) first name."
         )
 
         .def_property(
             "lastName", 
-            &Person::lastName, 
-            &Person::setLastName, 
+            &Person::last_name, 
+            &Person::set_last_name, 
             "The Person's (formatted) last name."
         )
         
         .def_property(
             "fullName", 
-            &Person::fullName, 
-            &Person::setFullName, 
+            &Person::full_name, 
+            &Person::set_full_name, 
             "The Person's full name. Joins first and last names."
         )
         
         .def_property(
             "dob", 
             &Person::dob, 
-            &Person::setDoB, 
+            &Person::set_dob, 
             "The Person's date-of-birth list i.e. [year,month,day]."
         )
 
         .def_property(
             "age", 
             &Person::age, 
-            &Person::setAge, 
+            &Person::set_age, 
             "The Person's age."
         )
 
         .def(
             "calcAge", 
-            &Person::calcAge, 
+            &Person::update_age, 
             "Calculate Person's age.", 
             py::arg("today")
         )
@@ -84,8 +84,8 @@ void init_bind_person(py::module_ &m) {
             [](const Person& self) { // __getstate__
                 /* Tuple that fully encodes the object state. */
                 return py::make_tuple(
-                    self.firstName(),
-                    self.lastName(),
+                    self.first_name(),
+                    self.last_name(),
                     self.dob()
                 );
             },

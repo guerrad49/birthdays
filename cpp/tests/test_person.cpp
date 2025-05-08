@@ -19,26 +19,26 @@ protected:
 
 /// Test formatting of names.
 TEST_F(PersonTest, NameFormatting) {
-    EXPECT_EQ(g_.firstName(), "george_michael");
-    EXPECT_EQ(g_.fullName(), "george_michael bluth");
+    EXPECT_EQ(g_.first_name(), "george_michael");
+    EXPECT_EQ(g_.full_name(), "george_michael bluth");
 }
 
 /// Test date-of-birth.
 TEST_F(PersonTest, DobTest) {
     DateArray d1{0,0,0};
-    EXPECT_THROW(p_.setDoB(d1), BirthdayError);
+    EXPECT_THROW(p_.set_dob(d1), BirthdayError);
 
     DateArray d2{2025,1,32};
-    EXPECT_THROW(p_.setDoB(d2), BirthdayError);
+    EXPECT_THROW(p_.set_dob(d2), BirthdayError);
 
     DateArray d3{2025,2,29};
-    EXPECT_THROW(p_.setDoB(d3), BirthdayError);
+    EXPECT_THROW(p_.set_dob(d3), BirthdayError);
 
     DateArray d4{2025,13,1};
-    EXPECT_THROW(p_.setDoB(d4), BirthdayError);
+    EXPECT_THROW(p_.set_dob(d4), BirthdayError);
 
     DateArray d5{2024,2,29};  // Leap year.
-    EXPECT_NO_THROW(p_.setDoB(d5));
+    EXPECT_NO_THROW(p_.set_dob(d5));
 }
 
 /// Test age.
@@ -47,11 +47,11 @@ TEST_F(PersonTest, AgeTest) {
     DateArray mockDate{2024,12,31};
 
     EXPECT_EQ(p_.age(), 255);  // Default.
-    p_.setDoB(DateArray{2024,1,1});
-    p_.calcAge(mockDate);
+    p_.set_dob(DateArray{2024,1,1});
+    p_.update_age(mockDate);
     EXPECT_EQ(p_.age(), 0);
 
-    g_.calcAge(mockDate);
+    g_.update_age(mockDate);
     EXPECT_EQ(g_.age(), 34);
 }
 
@@ -60,9 +60,9 @@ TEST_F(PersonTest, ComparisonTest) {
     Person gmb{"georGe michaeL", "Bluth", DateArray{1990,3,3}};
     EXPECT_TRUE(g_ == gmb);
 
-    gmb.setDoB(DateArray{1990,3,2});
+    gmb.set_dob(DateArray{1990,3,2});
     EXPECT_TRUE(g_ > gmb);
-    gmb.setDoB(DateArray{1990,3,4});
+    gmb.set_dob(DateArray{1990,3,4});
     EXPECT_TRUE(g_ < gmb);
 }
 

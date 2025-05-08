@@ -41,7 +41,7 @@ void Book::remove(const Person& p) {
     size_t index = 0;
 
     for (const Person& q: book_) {
-        if ( p.fullName() == q.fullName() ) {
+        if ( p.full_name() == q.full_name() ) {
             entryFound = true;
             break;
         }
@@ -61,7 +61,7 @@ void Book::remove(const Person& p) {
 
 void Book::update_ages(const DateArray& tdy) {
     for (Person& q: book_)
-        q.calcAge(tdy);
+        q.update_age(tdy);
 }
 
 void Book::display() {
@@ -74,8 +74,8 @@ void Book::display() {
 
     for (size_t i: ids) {
         std::stringstream ss;
-        ss << std::setw(23) << book_[i].fullName()
-            << std::setw(13) << book_[i].dobStr()
+        ss << std::setw(23) << book_[i].full_name()
+            << std::setw(13) << book_[i].dob_str()
             << "   " << book_[i].age();
         std::cout << ss.str() << std::endl;
     }
