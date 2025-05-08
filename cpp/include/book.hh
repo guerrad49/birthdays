@@ -45,7 +45,7 @@ public:
      */
     void remove(const Person& p);
 
-    void update_ages(const DateArray& tdy);
+    void set_ages_as_of(const DateArray& tdy);
 
     /// Prints book_ elements using ids as order.
     void display();

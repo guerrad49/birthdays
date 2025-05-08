@@ -48,10 +48,10 @@ TEST_F(PersonTest, AgeTest) {
 
     EXPECT_EQ(p_.age(), 255);  // Default.
     p_.set_dob(DateArray{2024,1,1});
-    p_.update_age(mockDate);
+    p_.set_age_as_of(mockDate);
     EXPECT_EQ(p_.age(), 0);
 
-    g_.update_age(mockDate);
+    g_.set_age_as_of(mockDate);
     EXPECT_EQ(g_.age(), 34);
 }
 

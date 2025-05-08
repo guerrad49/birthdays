@@ -54,10 +54,10 @@ public:
     void set_age(const uint8_t& age) { age_ = age; }
 
     /**
-     * @brief Update age using given date.
+     * @brief Update age as of given date.
      * @param date The date.
      */
-    void update_age(const DateArray& date);
+    void set_age_as_of(const DateArray& date);
 
 protected:
     /// Person string representation.

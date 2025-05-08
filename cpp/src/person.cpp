@@ -56,7 +56,7 @@ void Person::set_dob(const DateArray& date) {
         throw BirthdayError("Invalid date.");
 }
 
-void Person::update_age(const DateArray& date) {
+void Person::set_age_as_of(const DateArray& date) {
     if (!is_valid_date(date))
         throw BirthdayError("Invalid date.");
 

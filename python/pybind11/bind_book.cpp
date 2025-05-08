@@ -56,10 +56,10 @@ void init_bind_book(py::module_ &m) {
         )
         
         .def(
-            "update_ages", 
-            &Book::update_ages, 
-            "Updates ages of all members in Book.", 
-            py::arg("today")
+            "set_ages_as_of", 
+            &Book::set_ages_as_of, 
+            "Updates ages of all members as of given date.", 
+            py::arg("date")
         )
 
         .def(

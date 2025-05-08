@@ -74,10 +74,10 @@ void init_bind_person(py::module_ &m) {
         )
 
         .def(
-            "calcAge", 
-            &Person::update_age, 
-            "Calculate Person's age.", 
-            py::arg("today")
+            "set_age_as_of", 
+            &Person::set_age_as_of, 
+            "Update age as of given date.", 
+            py::arg("date")
         )
         
         .def(py::pickle(
