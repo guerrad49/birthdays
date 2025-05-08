@@ -10,7 +10,7 @@ Birthdays is a C++ library for managing a database of birthdays on MacOS. It pro
 
 
 ## Details
-A Person is created by passing *First Name*, *Last Name*, and *Date-of-Birth* (yyy-mm-dd). Each Person can be added/removed to/from a Book. The Book can perform sorting and filtering for the user. Displaying the Book for the user computes each Person's age to provide up-to-date information. Ages are **not** stored in database.
+A Person is created by passing *First Name*, *Last Name*, and *Date-of-Birth* (yyy-mm-dd). Each Person can be added/removed to/from a Book. The Book can perform sorting and filtering for the user. Displaying the Book for the user computes each Person's age to provide up-to-date information. Ages are **not** stored in database but can be computed for any valid date.
 
 
 ## Pre-Requisites
@@ -37,8 +37,8 @@ However, the user can simply choose to user the pre-installed library located in
 
 
 ## Python
-The Python interface adds "state" functionality which can be used in conjuction with the `pickle` module. The user can use the pre-installed shared-object in the `install` directory by adding `/path/to/install/lib` to their `PYTHONPATH`. The user can then run unittests and examples provided under the `python` directory. The `python/examples` provideds a tool for using Birthdays efficiently. Run 
+The Python interface adds "state" functionality which can be used in conjuction with the `pickle` module. The user can use the pre-installed shared-object in the `install` directory by adding `/path/to/install/lib` to their `PYTHONPATH`. The user can then run [unittests](https://docs.python.org/3/library/unittest.html) and examples provided under the `python` directory. Under `python/examples`, the user can find a tool for using `pyBirthdays` effictively. Run 
 ```
-    python3 /path/to/example/bday_tool.py -h
+    python3 /path/to/example/manage_bdays.py -h
 ```
 to see usage.
