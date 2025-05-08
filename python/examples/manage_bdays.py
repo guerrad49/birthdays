@@ -64,19 +64,23 @@ if __name__ == '__main__':
         elif args.sort == 'age':
             bb.sort(pyBirthdays.SORT_AGE)
 
-    if args.append or args.remove:
+    if args.append:
         p = pyBirthdays.Person(
             args.append[0], 
             args.append[1], 
             [int(x) for x in args.append[2].split('-')]
             )
-        if args.append:
-            bb.append(p)
-            update(args.file, bb)
-        else:  # args.remove
-            bb.remove(p)
-            update(args.file, bb)
-    
+        bb.append(p)
+        update(args.file, bb)
+    elif args.remove:
+        p = pyBirthdays.Person(
+            args.remove[0], 
+            args.remove[1], 
+            [int(x) for x in args.remove[2].split('-')]
+            )
+        bb.remove(p)
+        update(args.file, bb)
+
     # Compare to none since month can store 0.
     if args.month is not None:
         bb.filter(pyBirthdays.FILTER_MONTH, args.month)
