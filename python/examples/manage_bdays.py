@@ -29,8 +29,14 @@ def parse_args():
     p = argparse.ArgumentParser()
 
     p.add_argument('file', help='local pickle file holding database')
-    p.add_argument('-s', '--sort', choices=['age','last','calendar'],
-        help='sort birthdays in specified manner')
+    
+    p.add_argument('-s', '--sort', 
+        nargs='?', 
+        const='calendar', 
+        choices=['age','last','calendar'], 
+        default=None, 
+        help='sort birthdays in specified manner'
+    )
 
     changes = p.add_mutually_exclusive_group()
     changes.add_argument('-a', '--append', nargs=3,
@@ -56,14 +62,7 @@ if __name__ == '__main__':
     args = parse_args()
     bb   = load_from_file(args.file)
 
-    if args.sort:
-        if args.sort == 'calendar':
-            bb.sort(pyBirthdays.SORT_CALENDAR)
-        elif args.sort == 'last':
-            bb.sort(pyBirthdays.SORT_LASTNAME)
-        elif args.sort == 'age':
-            bb.sort(pyBirthdays.SORT_AGE)
-
+    # Changes.
     if args.append:
         p = pyBirthdays.Person(
             args.append[0], 
@@ -72,6 +71,7 @@ if __name__ == '__main__':
             )
         bb.append(p)
         update(args.file, bb)
+        show = False
     elif args.remove:
         p = pyBirthdays.Person(
             args.remove[0], 
@@ -80,18 +80,30 @@ if __name__ == '__main__':
             )
         bb.remove(p)
         update(args.file, bb)
+        show = False
+    else:
+        # All other options will display the book.
+        tdy = date.today()
+        bb.set_ages_as_of([tdy.year, tdy.month, tdy.day])
+        show = True
 
-    # Compare to none since month can store 0.
+    # Filters.
     if args.month is not None:
         bb.filter(pyBirthdays.FILTER_MONTH, args.month)
-        # Assume user would want to sort dates.
-        bb.sort()  # Use default sort i.e. calendar.
     elif args.last:
         bb.filter(pyBirthdays.FILTER_LASTNAME, args.last)
     elif args.first:
         bb.filter(pyBirthdays.FILTER_FIRSTNAME, args.first)
 
-    # Always display book when finished.
-    tdy = date.today()
-    bb.update_ages([tdy.year, tdy.month, tdy.day])
-    bb.display()
+    # Sorting.
+    if args.sort is not None:
+        if args.sort == 'calendar':
+            bb.sort(pyBirthdays.SORT_CALENDAR)
+        elif args.sort == 'last':
+            bb.sort(pyBirthdays.SORT_LASTNAME)
+        elif args.sort == 'age':
+            bb.sort(pyBirthdays.SORT_AGE)
+
+    # Display the book.
+    if show:
+        bb.display()
