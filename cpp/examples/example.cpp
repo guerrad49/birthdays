@@ -21,7 +21,7 @@ int main() {
 
     std::cout << std::endl;
     std::cout << "Update ages using 2024-12-31." << std::endl;
-    bb.update_ages(DateArray{2024,12,31});
+    bb.set_ages_as_of(DateArray{2024,12,31});
     bb.display();
 
     std::cout << std::endl;

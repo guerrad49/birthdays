@@ -25,11 +25,12 @@ public:
 
     std::vector<size_t> ids;
 
-    /// Default constructor.
-    Book() = default;
+    Book() = default;  // Default constructor.
 
     /// @brief Initializer list constructor.
     Book(std::initializer_list<Person> list);
+
+    ~Book() = default;  // Default desctructor.
 
     /**
      * @brief Appends Person to book_ list.
@@ -45,12 +46,13 @@ public:
      */
     void remove(const Person& p);
 
-    void set_ages_as_of(const DateArray& tdy);
+    /// @brief Update Person ages as of given date.
+    void set_ages_as_of(const DateArray& date);
 
-    /// Prints book_ elements using ids as order.
+    /// @brief Prints book_ elements using ids as order.
     void display();
 
-    /// Create an id for every Person in book_.
+    /// @brief Create an id for every Person in book_.
     void reset_ids();
 
     size_t size() const { return book_.size(); }

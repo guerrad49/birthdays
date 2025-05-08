@@ -19,8 +19,7 @@ class Person {
 public:
     friend class Book;
 
-    /// Default Constructor.
-    Person() = default;
+    Person() = default;  // Default constructor.
 
     /**
      * @brief Constructor.
@@ -35,15 +34,14 @@ public:
         const DateArray& dob
         );
     
-    /// Destructor.
-    ~Person() = default;
+    ~Person() = default;  // Default desctructor.
 
     std::string first_name() const { return firstName_; }
     std::string  last_name() const { return lastName_; }
     std::string  full_name() const { return fullName_; }
     DateArray dob() const { return dob_; }
     uint16_t age() const { return age_; }
-    /// Get date-of-birth as ISO-formatted string.
+    /// @brief Get date-of-birth as ISO-formatted string.
     std::string dob_str() const;
 
     
@@ -53,23 +51,19 @@ public:
     void set_dob(const DateArray& date);
     void set_age(const uint8_t& age) { age_ = age; }
 
-    /**
-     * @brief Update age as of given date.
-     * @param date The date.
-     */
+    /// @brief Update age as of given date.
     void set_age_as_of(const DateArray& date);
 
 protected:
-    /// Person string representation.
+    /// @brief Person string representation.
     friend std::ostream& operator<<(std::ostream& os, const Person& p);
 
-    /// Determine equality between two Person objects.
     friend bool operator==(const Person& lhs, const Person& rhs);
-    /// Compare using dob array comparison.
+    friend bool operator!=(const Person& lhs, const Person& rhs);
     friend bool operator<(const Person& lhs, const Person& rhs);
     friend bool operator>(const Person& lhs, const Person& rhs);
     friend bool operator<=(const Person& lhs, const Person& rhs);
-    friend bool operator<=(const Person& lhs, const Person& rhs);
+    friend bool operator>=(const Person& lhs, const Person& rhs);
 
 private:
     std::string firstName_;
@@ -83,7 +77,7 @@ private:
      * @param str The name string to format.
      * @return The formatted name.
      */
-    std::string format_name_(const std::string& str);
+    std::string to_lowercase_(const std::string& str);
 };
 
 }  // End namespace birthdays.

@@ -1,4 +1,3 @@
-#include <regex>
 #include <stdexcept>
 
 #include "person.hh"
@@ -30,19 +29,19 @@ std::string Person::dob_str() const {
     return ss.str();
 }
 
-std::string Person::format_name_(const std::string& str) {
+std::string Person::to_lowercase_(const std::string& str) {
     std::string name{str};
     std::transform(name.begin(), name.end(), name.begin(),
         [](unsigned char c){ return std::tolower(c); });
-    return std::regex_replace(name, std::regex(" "), "_");
+    return name;
 }
 
 void Person::set_first_name(const std::string& str) {
-    firstName_ = format_name_(str);
+    firstName_ = to_lowercase_(str);
 }
 
 void Person::set_last_name(const std::string& str) {
-    lastName_ = format_name_(str);
+    lastName_ = to_lowercase_(str);
 }
 
 void Person::set_full_name() {
@@ -86,20 +85,24 @@ bool operator==(const Person& lhs, const Person& rhs) {
         (lhs.dob_ == rhs.dob_);
 }
 
+bool operator!=(const Person& lhs, const Person& rhs) {
+    return !(lhs == rhs);
+}
+
 bool operator<(const Person &lhs, const Person &rhs) {
     return lhs.dob_ < rhs.dob_;
 }
 
 bool operator>(const Person &lhs, const Person &rhs) {
-    return rhs < lhs;
+    return lhs.dob_ > rhs.dob_;
 }
 
 bool operator<=(const Person &lhs, const Person &rhs) {
-    return !(lhs > rhs);
+    return !(lhs.dob_ > rhs.dob_);
 }
 
 bool operator>=(const Person &lhs, const Person &rhs) {
-    return !(lhs < rhs);
+    return !(lhs.dob_ < rhs.dob_);
 }
 
 }  // End namespace birthdays.

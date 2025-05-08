@@ -41,11 +41,11 @@ class BookTest(unittest.TestCase):
         self.assertEqual(len(self.bb), startSize-1)
         self.assertFalse(p in self.bb)
 
-    def test_update_ages(self):
+    def test_set_ages_as_of(self):
         defaultAges = [p.age for p in self.bb]
         self.assertTrue( all(a == 255 for a in defaultAges) )
 
-        self.bb.update_ages([2025,1,9])
+        self.bb.set_ages_as_of([2025,1,9])
         updatedAges = [p.age for p in self.bb]
         self.assertFalse( all(a == 255 for a in updatedAges) )
 
@@ -76,7 +76,7 @@ class BookTest(unittest.TestCase):
         order = [5,3,2,8,0,1,7,4,6]
         self.assertEqual(self.bb.ids, order)
 
-        self.bb.update_ages([2024,12,31])
+        self.bb.set_ages_as_of([2024,12,31])
         self.bb.sort(bdays.SORT_AGE)
         order = [3,4,5,0,2,1,6,8,7]
         self.assertEqual(self.bb.ids, order)

@@ -59,9 +59,9 @@ void Book::remove(const Person& p) {
     book_.erase(book_.begin() + index);
 }
 
-void Book::set_ages_as_of(const DateArray& tdy) {
+void Book::set_ages_as_of(const DateArray& date) {
     for (Person& q: book_)
-        q.set_age_as_of(tdy);
+        q.set_age_as_of(date);
 }
 
 void Book::display() {

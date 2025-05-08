@@ -23,7 +23,7 @@ class PersonTest(unittest.TestCase):
 
     def test_fullname(self):
         self.assertEqual(
-            self.gmb.fullName, "george_michael bluth"
+            self.gmb.fullName, "george michael bluth"
         )
 
     def test_dob(self):
@@ -43,7 +43,7 @@ class PersonTest(unittest.TestCase):
         for m in range(1,13):
             # Assume all months have 30 days.
             for today in product([2024],[m],range(1,31)):
-                self.p.calcAge(list(today))
+                self.p.set_age_as_of(list(today))
                 ages.append(self.p.age)
 
         change = 5*30 + 6  # 6 months and 6 days

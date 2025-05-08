@@ -19,8 +19,8 @@ protected:
 
 /// Test formatting of names.
 TEST_F(PersonTest, NameFormatting) {
-    EXPECT_EQ(g_.first_name(), "george_michael");
-    EXPECT_EQ(g_.full_name(), "george_michael bluth");
+    EXPECT_EQ(g_.first_name(), "george michael");
+    EXPECT_EQ(g_.full_name(), "george michael bluth");
 }
 
 /// Test date-of-birth.

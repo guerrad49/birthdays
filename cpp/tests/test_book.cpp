@@ -67,7 +67,7 @@ TEST_F(BookTest, SortTest) {
     order = std::vector<size_t>{5,3,2,8,0,1,7,4,6};
     EXPECT_EQ(bb_.ids, order);
 
-    bb_.update_ages(DateArray{2024,12,31});
+    bb_.set_ages_as_of(DateArray{2024,12,31});
     bb_.sort(Book::SORT_METHOD::AGE);
     order = std::vector<size_t>{3,4,5,0,2,1,6,8,7};
     EXPECT_EQ(bb_.ids, order);
