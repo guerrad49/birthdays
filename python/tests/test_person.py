@@ -37,20 +37,23 @@ class PersonTest(unittest.TestCase):
             self.p.dob = [2024,13,1]
 
     def test_age(self):
-        self.p.dob = [1978,6,7]
+        self.p.dob = [1980,6,7]
 
         ages = list()
         for m in range(1,13):
-            # Assume all months have 30 days.
-            for today in product([2024],[m],range(1,31)):
-                self.p.set_age_as_of(list(today))
+            # All days in 2024. Notice discarding invalid dates.
+            for today in product([2024],[m],range(1,32)):
+                try:
+                    self.p.set_age_as_of(list(today))
+                except BirthdayError:
+                    continue
                 ages.append(self.p.age)
 
-        change = 5*30 + 6  # 6 months and 6 days
-        for a in ages[:change]:
-            self.assertEqual(a, 45)
-        for a in ages[change:]:
-            self.assertEqual(a, 46)
+        daysBeforeBday = 31 + 29 + 31 + 30 + 31 + 6  # Leap year.
+        for a in ages[:daysBeforeBday]:
+            self.assertEqual(a, 43)
+        for a in ages[daysBeforeBday:]:
+            self.assertEqual(a, 44)
 
     def test_comparison(self):
         p1 = Person("george michael", "bluth", [1990,3,3])
