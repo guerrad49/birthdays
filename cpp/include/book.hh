@@ -30,7 +30,7 @@ public:
     /// @brief Initializer list constructor.
     Book(std::initializer_list<Person> list);
 
-    ~Book() = default;  // Default desctructor.
+    ~Book() = default;  // Default destructor.
 
     /**
      * @brief Appends Person to book_ list.
