@@ -14,16 +14,26 @@ protected:
     Person g_;
 
     PersonTest() : 
-        g_{"George MiChael", "bluTh", DateArray{1990,3,3}} {}
+        g_{
+            "George MiChael", "bluTh", 
+            DateArray{1990,3,3}, 
+            Person::Relationship::FAMILY
+        } {}
 };
 
-/// Test formatting of names.
+/// @brief Test formatting of names.
 TEST_F(PersonTest, NameFormatting) {
     EXPECT_EQ(g_.first_name(), "george michael");
     EXPECT_EQ(g_.full_name(), "george michael bluth");
 }
 
-/// Test date-of-birth.
+/// @brief Test relationship to user.
+TEST_F(PersonTest, RelationshipTest) {
+    EXPECT_EQ(p_.relationship(), Person::Relationship::OTHER);
+    EXPECT_EQ(g_.relationship(), Person::Relationship::FAMILY);
+}
+
+/// @brief Test date-of-birth.
 TEST_F(PersonTest, DobTest) {
     DateArray d1{0,0,0};
     EXPECT_THROW(p_.set_dob(d1), BirthdayError);
@@ -41,9 +51,9 @@ TEST_F(PersonTest, DobTest) {
     EXPECT_NO_THROW(p_.set_dob(d5));
 }
 
-/// Test age.
+/// @brief Test age.
+/// @warning Changing *mockDate* changes test results.
 TEST_F(PersonTest, AgeTest) {
-    // Warning: Changing date changes test results.
     DateArray mockDate{2024,12,31};
 
     EXPECT_EQ(p_.age(), 255);  // Default.
@@ -55,7 +65,7 @@ TEST_F(PersonTest, AgeTest) {
     EXPECT_EQ(g_.age(), 34);
 }
 
-/// Test comparisons.
+/// @brief Test comparisons.
 TEST_F(PersonTest, ComparisonTest) {
     Person gmb{"georGe michaeL", "Bluth", DateArray{1990,3,3}};
     EXPECT_TRUE(g_ == gmb);

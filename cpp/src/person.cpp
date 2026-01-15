@@ -11,12 +11,14 @@ namespace birthdays {
 Person::Person(
     const std::string& first, 
     const std::string& last, 
-    const DateArray& dob
+    const DateArray& dob, 
+    Relationship rel
 ) {
     set_first_name(first);
     set_last_name(last);
     set_full_name();
     set_dob(dob);
+    rel_ = rel;
 }
 
 std::string Person::dob_str() const {
