@@ -11,6 +11,14 @@ namespace py = pybind11;
 using namespace birthdays;
 
 void init_bind_person(py::module_ &m) {
+    /// @brief Export the enum Relationship.
+    py::enum_<Person::Relationship>(m, "Relationship")
+        .value("FRIEND", Person::Relationship::FRIEND)
+        .value("FAMILY", Person::Relationship::FAMILY)
+        .value("OTHER", Person::Relationship::OTHER)
+        .export_values()
+        ;
+
     py::class_<Person>(m, "Person")
         .def(py::init<>())
         
@@ -71,6 +79,13 @@ void init_bind_person(py::module_ &m) {
             &Person::age, 
             &Person::set_age, 
             "The Person's age."
+        )
+
+        .def_property(
+            "relationship", 
+            &Person::relationship, 
+            &Person::set_relationship, 
+            "The Person's relationship to user."
         )
 
         .def(
