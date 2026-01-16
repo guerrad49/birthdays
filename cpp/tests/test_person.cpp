@@ -17,7 +17,7 @@ protected:
         g_{
             "George MiChael", "bluTh", 
             DateArray{1990,3,3}, 
-            Person::Relationship::FAMILY
+            Person::RELATIONSHIP::FAMILY
         } {}
 };
 
@@ -29,8 +29,8 @@ TEST_F(PersonTest, NameFormatting) {
 
 /// @brief Test relationship to user.
 TEST_F(PersonTest, RelationshipTest) {
-    EXPECT_EQ(p_.relationship(), Person::Relationship::OTHER);
-    EXPECT_EQ(g_.relationship(), Person::Relationship::FAMILY);
+    EXPECT_EQ(p_.relationship(), Person::RELATIONSHIP::OTHER);
+    EXPECT_EQ(g_.relationship(), Person::RELATIONSHIP::FAMILY);
 }
 
 /// @brief Test date-of-birth.

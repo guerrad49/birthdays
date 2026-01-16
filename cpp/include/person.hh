@@ -24,7 +24,7 @@ public:
      * @enum Relationship.
      * @brief The relationship of a Person to the user.
      */
-    enum class Relationship {
+    enum class RELATIONSHIP {
         FRIEND = 1, 
         FAMILY = 2, 
         OTHER = 3
@@ -45,7 +45,7 @@ public:
         const std::string& first, 
         const std::string& last, 
         const DateArray& dob, 
-        Relationship rel = Relationship::OTHER
+        RELATIONSHIP rel = RELATIONSHIP::OTHER
         );
     
     ~Person() = default;  // Default destructor.
@@ -57,7 +57,7 @@ public:
     uint16_t age() const { return age_; }
     /// @brief Get date-of-birth as ISO-formatted string.
     std::string dob_str() const;
-    Relationship relationship() const { return rel_; }
+    RELATIONSHIP relationship() const { return rel_; }
 
     
     void set_first_name(const std::string& str);
@@ -65,7 +65,7 @@ public:
     void set_full_name();
     void set_dob(const DateArray& date);
     void set_age(const uint8_t& age) { age_ = age; }
-    void set_relationship(Relationship rel) { rel_ = rel; }
+    void set_relationship(RELATIONSHIP rel) { rel_ = rel; }
 
     /// @brief Update age as of given date.
     void set_age_as_of(const DateArray& date);
@@ -93,7 +93,7 @@ private:
     /// The person's age.
     uint8_t age_{255};
     /// The person's relationship to the user.
-    Relationship rel_{Relationship::OTHER};
+    RELATIONSHIP rel_{RELATIONSHIP::OTHER};
 
     /**
      * @brief Format names to lowercase and underscores.

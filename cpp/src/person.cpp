@@ -12,7 +12,7 @@ Person::Person(
     const std::string& first, 
     const std::string& last, 
     const DateArray& dob, 
-    Relationship rel
+    RELATIONSHIP rel
 ) {
     set_first_name(first);
     set_last_name(last);
