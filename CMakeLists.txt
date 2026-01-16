@@ -10,7 +10,7 @@ option(BUILD_PYBIND "Build Python bindings." OFF)
 
 project(
     birthdays
-    VERSION 0.1.5
+    VERSION 0.2.0
     LANGUAGES CXX
 )
 
