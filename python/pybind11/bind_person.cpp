@@ -85,19 +85,21 @@ void define_person_methods(py::class_<Person>& cls) {
         [](const Person& self) { // __getstate__
             /* Tuple that fully encodes the object state. */
             return py::make_tuple(
-                self.first_name(),
-                self.last_name(),
-                self.dob()
+                self.first_name(), 
+                self.last_name(), 
+                self.dob(), 
+                self.relationship()
             );
         },
         [](const py::tuple& t) { // __setstate__
-            if (t.size() != 3)
+            if (t.size() != 4)
                 throw std::runtime_error("Invalid state!");
             std::string fn = t[0].cast<std::string>();
             std::string ln = t[1].cast<std::string>();
             DateArray dob = t[2].cast<DateArray>();
+            Person::RELATIONSHIP rel = t[3].cast<Person::RELATIONSHIP>();
             /* Return a newly created C++ instance. */
-            return new Person{fn, ln, dob};
+            return new Person{fn, ln, dob, rel};
         }
     ));
 }
