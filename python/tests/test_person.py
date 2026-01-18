@@ -9,12 +9,19 @@ from pyBirthdays import Person, BirthdayError
 class PersonTest(unittest.TestCase):
     def setUp(self):
         self.p = Person()
-        self.gmb = Person("George MiChael", "bluTh", [1990,3,3])
+        self.gmb = Person(
+            "George MiChael", "bluTh", 
+            [1990,3,3], Person.FAMILY
+            )
 
     def test_default_values(self):
         self.assertEqual(self.p.firstName, "")
         self.assertEqual(self.p.lastName, "")
         self.assertEqual(self.p.dob, [0,0,0])
+        self.assertEqual(
+            self.p.relationship, 
+            Person.OTHER
+            )
 
     def test_types(self):
         self.assertIsInstance(self.gmb.firstName, str)
@@ -69,6 +76,10 @@ class PersonTest(unittest.TestCase):
             fp.seek(0)
             loaded_obj = pickle.load(fp)
             self.assertEqual(self.gmb, loaded_obj)
+            self.assertEqual(
+                self.gmb.relationship, 
+                loaded_obj.relationship
+            )
 
 
 if __name__ == "__main__":
