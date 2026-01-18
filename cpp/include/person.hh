@@ -25,8 +25,8 @@ public:
      * @brief The relationship of a Person to the user.
      */
     enum class RELATIONSHIP {
-        FRIEND = 1, 
-        FAMILY = 2, 
+        FAMILY = 1, 
+        FRIEND = 2, 
         OTHER = 3
     };
 
