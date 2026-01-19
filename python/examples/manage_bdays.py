@@ -4,22 +4,22 @@ import pickle
 import argparse
 from datetime import date
 
-import pyBirthdays
+from pyBirthdays import Book, Person
 import pdb
 
 #=======================================================================
 
-def load_from_file(file: str) -> pyBirthdays.Book:
+def load_from_file(file: str) -> Book:
     try:
         with open(file, 'rb') as f:
             data = pickle.load(f)
     except:
         print("Could not read file. Creating empty Book.")
-        return pyBirthdays.Book()
+        return Book()
     else:
-        return pyBirthdays.Book(data)
+        return Book(data)
     
-def update(file: str, bb: pyBirthdays.Book) -> None:
+def update(file: str, bb: Book) -> None:
     # Note: Book itself cannot be pickled
     ppl = list(bb)
     with open(file, 'wb') as f:
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     # Changes.
     if args.append:
-        p = pyBirthdays.Person(
+        p = Person(
             args.append[0], 
             args.append[1], 
             [int(x) for x in args.append[2].split('-')]
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         update(args.file, bb)
         show = False
     elif args.remove:
-        p = pyBirthdays.Person(
+        p = Person(
             args.remove[0], 
             args.remove[1], 
             [int(x) for x in args.remove[2].split('-')]
@@ -89,20 +89,20 @@ if __name__ == '__main__':
 
     # Filters.
     if args.month is not None:
-        bb.filter(pyBirthdays.FILTER_MONTH, args.month)
+        bb.filter(Book.FILTER_MONTH, args.month)
     elif args.last:
-        bb.filter(pyBirthdays.FILTER_LASTNAME, args.last)
+        bb.filter(Book.FILTER_LASTNAME, args.last)
     elif args.first:
-        bb.filter(pyBirthdays.FILTER_FIRSTNAME, args.first)
+        bb.filter(Book.FILTER_FIRSTNAME, args.first)
 
     # Sorting.
     if args.sort is not None:
         if args.sort == 'calendar':
-            bb.sort(pyBirthdays.SORT_CALENDAR)
+            bb.sort(Book.SORT_CALENDAR)
         elif args.sort == 'last':
-            bb.sort(pyBirthdays.SORT_LASTNAME)
+            bb.sort(Book.SORT_LASTNAME)
         elif args.sort == 'age':
-            bb.sort(pyBirthdays.SORT_AGE)
+            bb.sort(Book.SORT_AGE)
 
     # Display the book.
     if show:
