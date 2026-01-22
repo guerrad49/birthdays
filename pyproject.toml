@@ -1,0 +1,15 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "pyBirthdays"
+version = "0.2.0"
+description = "A package to manage database of birthdays."
+
+authors = [
+    {name = "David Guerra"}
+]
+
+[project.urls]
+Homepage = "https://github.com/guerrad49/birthdays"
