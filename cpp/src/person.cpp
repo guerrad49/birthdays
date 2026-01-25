@@ -9,13 +9,13 @@ namespace birthdays {
 // Member functions.
 
 Person::Person(
-    const std::string& first, 
-    const std::string& last, 
+    const std::string& firstName, 
+    const std::string& lastName, 
     const DateArray& dob, 
     RELATIONSHIP rel
 ) {
-    set_first_name(first);
-    set_last_name(last);
+    set_first_name(firstName);
+    set_last_name(lastName);
     set_full_name();
     set_dob(dob);
     rel_ = rel;
