@@ -14,10 +14,13 @@
 
 namespace birthdays {
 
-/// @brief Typedef for a date array.
+/**
+ * @brief Represents a date as an array of three integers.
+ * @details The format is [Year, Month, Day].
+ */
 using DateArray = std::array<uint16_t,3>;
 
-/// @brief Class to manage a Person's data.
+/// @brief Class to manage a person's data.
 class Person {
 public:
     /**
@@ -35,43 +38,54 @@ public:
     Person() = default;  // Default constructor.
 
     /**
-     * @brief Constructor.
-     * @details Creates Person with given data.
-     * @param first The first name.
-     * @param last The last name.
-     * @param dob The date-of-birth array i.e. <year,month,day>.
+     * @brief Creates Person from given data.
+     * @param firstName The first name.
+     * @param lastName The last name.
+     * @param dob The date-of-birth in ISO format.
+     * @param rel 
      */
     Person(
-        const std::string& first, 
-        const std::string& last, 
+        const std::string& firstName, 
+        const std::string& lastName, 
         const DateArray& dob, 
         RELATIONSHIP rel = RELATIONSHIP::OTHER
         );
     
     ~Person() = default;  // Default destructor.
 
+    /// Gets the first name string.
     std::string first_name() const { return firstName_; }
+    /// Gets the last name string.
     std::string  last_name() const { return lastName_; }
+    /// Gets the formatted full name string.
     std::string  full_name() const { return fullName_; }
+    /// Gets the date-of-birth array.
     DateArray dob() const { return dob_; }
-    uint16_t age() const { return age_; }
-    /// @brief Get date-of-birth as ISO-formatted string.
+    /// Gets the date-of-birth as ISO-formatted string.
     std::string dob_str() const;
+    /// Gets the age value.
+    uint16_t age() const { return age_; }
+    /// Gets the relationship value.
     RELATIONSHIP relationship() const { return rel_; }
 
-    
+    /// Sets the first name.
     void set_first_name(const std::string& str);
+    /// Sets the last name.
     void set_last_name(const std::string& str);
+    /// Sets the full name.
     void set_full_name();
+    /// Sets the date-of-birth array.
     void set_dob(const DateArray& date);
+    /// Sets the age value.
     void set_age(const uint8_t& age) { age_ = age; }
+    /// Sets the relationship value.
     void set_relationship(RELATIONSHIP rel) { rel_ = rel; }
 
-    /// @brief Update age as of given date.
+    /// Sets the age as of given date.
     void set_age_as_of(const DateArray& date);
 
 protected:
-    /// @brief Person string representation.
+    /// Person string representation.
     friend std::ostream& operator<<(std::ostream& os, const Person& p);
 
     friend bool operator==(const Person& lhs, const Person& rhs);
@@ -88,7 +102,7 @@ private:
     std::string lastName_;
     /// The person's full name.
     std::string fullName_;
-    /// The person's date-of-birth.
+    /// The person's date-of-birth array.
     DateArray dob_;
     /// The person's age.
     uint8_t age_{255};
