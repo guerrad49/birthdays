@@ -44,22 +44,5 @@ endif()
 
 # Build Doxygen documentation.
 if (BUILD_DOCS)
-    find_package(Doxygen REQUIRED)
-
-    message("CMAKE_CURRENT_BINARY_DIR=${CMAKE_CURRENT_BINARY_DIR}")
-    
-    set(DOXYGEN_PROJECT_NAME "MyProject")
-    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
-    set(DOXYGEN_EXCLUDE_PATTERNS 
-        "*/examples/*" 
-        "*/tests/*"
-        )
-    set(DOXYGEN_GENERATE_LATEX NO)
-
-    doxygen_add_docs(
-        docs
-        ${PROJECT_SOURCE_DIR}/cpp
-        COMMENT "Generating API documentation"
-    )
-
+    add_subdirectory(docs)
 endif()
